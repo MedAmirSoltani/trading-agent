@@ -1,0 +1,140 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+}
+
+.container {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #FFA500;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="date"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+}
+
+select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23808080'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position-x: 95%;
+    background-position-y: center;
+    background-color: #fff;
+}
+
+button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #FFA500;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #ff5722;
+}
+
+
+
+
+
+
+
+
+
+/* Checkboxes */
+input[type="checkbox"] {
+    display: none; /* Hide the default checkbox */
+}
+
+/* Custom checkbox style */
+.checkbox-container {
+    display: inline-block;
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 12px;
+}
+
+/* Checkmark */
+.checkbox-container::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 2px;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+}
+
+/* Show checkmark when checkbox is checked */
+.checkbox-container input:checked + .checkmark::after {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 2px;
+    width: 6px;
+    height: 12px;
+    border: solid #FFA500;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+/* Checkbox label */
+.checkbox-container::after {
+    content: "";
+    position: absolute;
+    left: 25px;
+    top: 0;
+    width: 0;
+    height: 0;
+    border: 3px solid transparent;
+    border-radius: 3px;
+    border-top-color: #FFA500;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* Show checkmark when checkbox is checked */
+.checkbox-container input:checked + .checkmark::before {
+    border-color: #FFA500;
+}
+
+/* Show checkmark label when checkbox is checked */
+.checkbox-container input:checked + .checkmark::after {
+    opacity: 1;
+}
