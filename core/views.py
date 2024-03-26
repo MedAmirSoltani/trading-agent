@@ -4,10 +4,18 @@ from django.shortcuts import render, redirect
 import plotly.graph_objs as go
 from plotly.offline import plot
 from .models import Preferences
-
+import numpy as np
+import pandas as pd
+from scipy.optimize import minimize
+from django.shortcuts import render
 from django.contrib.auth import login, authenticate
 from .forms import CustomUserCreationForm, CustomAuthenticationForm,CustomUserChangeForm,PreferencesForm
-
+import joblib
+from pypfopt import EfficientFrontier
+from pypfopt import risk_models
+import matplotlib.pyplot as plt
+import io
+import base64
 def home(request):
     return render(request, 'home.html')
 def how(request):
@@ -15,30 +23,37 @@ def how(request):
 def about(request):
     return render(request, 'about.html')
 
-
-
 def dashboard(request):
- if Preferences.objects.filter(user=request.user).exists():
-    # Dummy data for demonstration
-    portfolio_returns_data = [0.05, 0.08, 0.1, 0.12, 0.15]
-    asset_allocation_data = {'Stocks': 60, 'Bonds': 30, 'Cash': 10}
-    market_trends_data = {'x': ['Jan', 'Feb', 'Mar'], 'y': [100, 150, 200]}
-    
-    # Line chart for portfolio returns over time
-    portfolio_returns_chart = plot([go.Scatter(x=list(range(len(portfolio_returns_data))), y=portfolio_returns_data, mode='lines', name='Portfolio Returns')], output_type='div')
+    # Load the trained model
+    model_path = 'C:/Users/solta/OneDrive/Bureau/project/trading-agent/core/random_forest_model23.pkl'
+    model = joblib.load(model_path)
+    # Generate predictions for the current time
+    sample_price = np.random.rand()  # Random price
+    sample_volatility = np.random.rand()  # Random volatility
+    sample_50_day_ma = np.random.rand()  # Random 50-day moving average
+    sample_200_day_ma = np.random.rand()  
+    sample_rsi = np.random.rand()
+    sample_rate_of_change = np.random.rand() 
+    sample_close = np.random.rand()
+    sample_historical_volatility = np.random.rand()  
 
-    # Pie chart for asset allocation
-    asset_allocation_chart = plot([go.Pie(labels=list(asset_allocation_data.keys()), values=list(asset_allocation_data.values()))], output_type='div')
+    sample = np.array([[sample_price, sample_volatility, sample_50_day_ma, sample_200_day_ma, sample_rsi, sample_rate_of_change, sample_close, sample_historical_volatility]])
+    Portfolio = model.predict(sample)
 
-    # Bar chart for market trends
-    market_trends_chart = plot([go.Bar(x=market_trends_data['x'], y=market_trends_data['y'])], output_type='div')
 
-    return render(request, 'dashboard.html', {'portfolio_returns_chart': portfolio_returns_chart,
-                                               'asset_allocation_chart': asset_allocation_chart,
-                                               'market_trends_chart': market_trends_chart})
- else:
-        # If preferences are not registered, redirect to the preferences page
-        return redirect('preferences')
+    # Retrieve portfolio data for visualization (e.g., last few predictions)
+    portfolio_data = Portfolio.objects.all().order_by('-timestamp')[:10]
+
+    return render(request, 'dashboard.html', {'portfolio_data': portfolio_data})
+
+
+
+
+
+
+
+
+
 
 def portfolio_analysis(request):
     # Dummy data for demonstration
@@ -295,5 +310,132 @@ def update_preferences(request):
     return render(request, 'update_preferences.html', {'form': form})
 
 
+from django.shortcuts import render, redirect
+from .models import ForumTopic, ForumComment
+from .forms import ForumTopicForm, ForumCommentForm
+import csv
+from .forms import CsvUploadForm
+def forum(request):
+    topics = ForumTopic.objects.all()
+    return render(request, 'forum.html', {'topics': topics})
 
+def topic_detail(request, topic_id):
+    topic = ForumTopic.objects.get(id=topic_id)
+    comments = topic.forumcomment_set.all()
+    if request.method == 'POST':
+        form = ForumCommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user = request.user
+            comment.topic = topic
+            comment.save()
+            return redirect('topic_detail', topic_id=topic_id)
+    else:
+        form = ForumCommentForm()
+    return render(request, 'topic_detail.html', {'topic': topic, 'comments': comments, 'form': form})
 
+def add_topic(request):
+    if request.method == 'POST':
+        topic_form = ForumTopicForm(request.POST)
+        post_form = ForumCommentForm(request.POST)
+        if topic_form.is_valid() and post_form.is_valid():
+            topic = topic_form.save(commit=False)
+            topic.user = request.user
+            topic.save()
+            post = post_form.save(commit=False)
+            post.topic = topic
+            post.user = request.user
+            post.save()
+            return redirect('forum')
+    else:
+        topic_form = ForumTopicForm()
+        post_form = ForumCommentForm()
+    return render(request, 'add_topic.html', {'topic_form': topic_form, 'post_form': post_form})
+
+from django.db import IntegrityError
+
+def add_from_csv(request):
+    if request.method == 'POST' and request.FILES.get('csv_file'):
+        csv_file = request.FILES['csv_file']
+        if csv_file.name.endswith('.csv'):
+            decoded_file = csv_file.read().decode('utf-8').splitlines()
+            reader = csv.DictReader(decoded_file)
+            for row in reader:
+                # Create or get the topic
+                topic_name = row['Topic']
+                try:
+                    topic = ForumTopic.objects.create(topic=topic_name, user=request.user)
+                except IntegrityError:  # Handle IntegrityError if user_id is not provided
+                    topic = ForumTopic.objects.create(topic=topic_name)
+
+                # Create the comment and associate it with the topic
+                comment_text = row['Comment']
+                comment = ForumComment(topic=topic, user=request.user, comment=comment_text)
+                comment.save()
+
+            return redirect('forum')  # Redirect to forum page after adding posts
+    else:
+        # If not a POST request or no CSV file provided, render the form
+        form = CsvUploadForm()
+    return render(request, 'add_from_csv.html', {'form': form})
+
+from django.http import HttpResponse
+from textblob import TextBlob
+def sentiment_analysis(request):
+    # Retrieve comments from the database
+    comments = ForumComment.objects.all()
+
+    # Perform sentiment analysis and store results
+    data = []
+    for comment in comments:
+        sentiment_score = TextBlob(comment.comment).sentiment.polarity
+
+        data.append({
+            'Date': comment.created_at,
+            'Name': comment.user.username,
+            'Topic': comment.topic,
+            'Comment': comment.comment,
+            'Sentiment_Score': sentiment_score
+        })
+
+         # Paginate the data
+    paginator = Paginator(data, 5) 
+    page_number = request.GET.get('page')
+    try:
+        page_obj = paginator.page(page_number)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        page_obj = paginator.page(paginator.num_pages)
+
+    return render(request, 'sentiment_analysis.html', {'page_obj': page_obj})
+
+def download_csv(request):
+    # Retrieve data for the CSV file (similar to what you did in the sentiment_analysis view)
+    comments = ForumComment.objects.all()
+    data = []
+
+    for comment in comments:
+        sentiment_score = TextBlob(comment.comment).sentiment.polarity
+        # Add the comment data to the list
+        data.append({
+            'Date': comment.created_at,
+            'Name': comment.user.username,
+            'Topic': comment.topic.topic,
+            'Comment': comment.comment,
+            'Sentiment_Score': sentiment_score,
+        })
+
+    # Create a CSV response
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="sentiment_analysis.csv"'
+
+    # Write data to the CSV file
+    writer = csv.DictWriter(response, fieldnames=['Date', 'Name', 'Topic', 'Comment', 'Sentiment_Score'])
+    writer.writeheader()
+    for row in data:
+        writer.writerow(row)
+
+    return response

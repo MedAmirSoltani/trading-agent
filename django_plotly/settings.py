@@ -1,5 +1,7 @@
 from pathlib import Path
 import os
+TF_ENABLE_ONEDNN_OPTS=0
+
 LOGIN_REDIRECT_URL = '/home/'
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +22,6 @@ SECRET_KEY = 'django-insecure-sy88^q+h@51er2t+ypcw7r!6w1+u!2ztep^h0q1hzg**c*j677
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 ALLOWED_HOSTS = []
 
 

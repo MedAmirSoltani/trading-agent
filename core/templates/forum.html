@@ -139,24 +139,29 @@
                     <li class="nav-item ">
                       <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item ">
+                    <li class="nav-item  ">
                       <a class="nav-link" href="{% url 'about' %}"> About </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item active">
                       {% if user.is_authenticated %}
                       <a class="nav-link" href="{% url 'forum' %}"> Forum </a>
                       {% else %}
                       <a class="nav-link" href="{% url 'login' %}"> Forum  </a>
                       {% endif %}
                     </li>
-                    <li class="nav-item active">
+                    <li class="nav-item">
+                      {% if user.is_authenticated %}
                       <a class="nav-link" href="{% url 'how' %}"> Get Started </a>
+                      {% else %}
+                      <a class="nav-link" href="{% url 'login' %}"> Get Started </a>
+                      {% endif %}
                     </li>
                     {% if user.is_authenticated %}
                     <li class="nav-item">
                       <a class="nav-link"> Available Funds: $ {{ user.preferences.available_funds }} </a>
                     </li>
                       {% endif %}
+                    
                 
                
              
@@ -167,109 +172,108 @@
     </header>
     <!-- end header section -->
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-
-
-    <br>
-
-
-
-
-
-
-
-
-<!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ company_name }} Portfolio</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <!-- Include Plotly.js -->
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <title>Trading Forum</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-r9P6H0ijzdMivfOJdtC6SYaRt0l9lKgRiTLJF3Y5QnKuHFw5/ZGo+/iYI6PGQn8dCw/Ih4G7Dkwk4TkshvwdDQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f8f9fa;
-            color: #343a40;
+            color: #333;
         }
         .container {
             max-width: 800px;
-            margin: 0 auto;
+            margin: 20px auto;
             padding: 20px;
-            background-color: #fff;
+            background-color: #ffffff;
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
         }
-        .header {
+        h1 {
             text-align: center;
-            margin-bottom: 30px;
+            color: #1da1f2;
+            margin-bottom: 20px;
+        }
+        .forum-actions {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .forum-actions a {
+            text-decoration: none;
+            color: #fff;
+            background-color: #2fa84a;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin: 0 10px;
+            transition: background-color 0.3s ease;
+        }
+        .forum-actions a:hover {
+            background-color: #66d07d;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #343a40;
+            color: white;
+        }
+        tr:hover {
+            background-color: #f2f2f2;
         }
         .icon {
-            font-size: 48px;
-            color: #6c757d;
-        }
-        h1 {
-            color: #343a40;
-            margin-top: 0;
-        }
-        h2 {
-            color: #343a40;
-            margin-top: 30px;
-            margin-bottom: 15px;
-        }
-        ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        li {
-            margin-bottom: 10px;
-        }
-        .no-data {
-            text-align: center;
-            font-style: italic;
-            color: #6c757d;
-        }
-        .plot-container {
-            text-align: center;
-            margin-bottom: 20px;
+            margin-right: 5px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1><i class="fas fa-building icon"></i> {{ company_name }} Portfolio</h1>
-        </div>
-        <div class="plot-container">
-            <h2><i class="fas fa-chart-line"></i> Portfolio Performance</h2>
-            {{ portfolio_returns_chart|safe }}
+        <h1><i class="fas fa-comments icon"></i> Stock Market Forum</h1>
+        
+        <!-- Forum Actions -->
+  <div class="forum-actions">
+    <a href="{% url 'add_topic' %}" style="background-color: #007bff;"><i class="fas fa-plus icon"></i> Add A New Topic</a>
+    <a href="{% url 'add_from_csv' %}" style="background-color: #28a745;"><i class="fas fa-file-upload icon"></i> Upload CSV</a>
+    <a href="{% url 'sentiment_analysis' %}" style="background-color: #dc3545;"><i class="fas fa-chart-line"></i> Sentiment Analysis</a>
+</div>
 
-      
-        </div>
-        <center>
-        {% if company_portfolio_metrics %}
-            <div>
-                <h2><i class="fas fa-chart-area"></i> Portfolio Metrics</h2>
-                <ul>
-                    {% for key, value in company_portfolio_metrics.items %}
-                        <li>{{ key }}: {{ value }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-        {% else %}
-            <p class="no-data">No portfolio data available for {{ company_name }}.</p>
-        {% endif %}
+
+        <!-- Display Topics -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Topic</th>
+                    <th>Created By</th>
+                    <th>Created At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for topic in topics %}
+                <tr>
+                    <td><a href="{% url 'topic_detail' topic.id %}">{{ topic.topic }}</a></td>
+                    <td>{{ topic.user.username }}</td>
+                    <td>{{ topic.created_at }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
-</center>
 </body>
 </html>
 
-<br>
 
 
 

@@ -51,3 +51,15 @@ class Preferences(models.Model):
     knowledge_experience = models.CharField(max_length=20, choices=KNOWLEDGE_EXPERIENCE_CHOICES)
     sectors = models.CharField(max_length=20, choices=SECTORS_CHOICES)
     available_funds = models.DecimalField(max_digits=12, decimal_places=2)
+from django.db import models
+
+class ForumTopic(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    topic = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+class ForumComment(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    topic = models.ForeignKey(ForumTopic, on_delete=models.CASCADE)
+    comment = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)

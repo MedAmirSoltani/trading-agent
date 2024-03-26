@@ -139,24 +139,29 @@
                     <li class="nav-item ">
                       <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item ">
+                    <li class="nav-item  ">
                       <a class="nav-link" href="{% url 'about' %}"> About </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item active">
                       {% if user.is_authenticated %}
                       <a class="nav-link" href="{% url 'forum' %}"> Forum </a>
                       {% else %}
                       <a class="nav-link" href="{% url 'login' %}"> Forum  </a>
                       {% endif %}
                     </li>
-                    <li class="nav-item active">
+                    <li class="nav-item">
+                      {% if user.is_authenticated %}
                       <a class="nav-link" href="{% url 'how' %}"> Get Started </a>
+                      {% else %}
+                      <a class="nav-link" href="{% url 'login' %}"> Get Started </a>
+                      {% endif %}
                     </li>
                     {% if user.is_authenticated %}
                     <li class="nav-item">
                       <a class="nav-link"> Available Funds: $ {{ user.preferences.available_funds }} </a>
                     </li>
                       {% endif %}
+                    
                 
                
              
@@ -167,109 +172,78 @@
     </header>
     <!-- end header section -->
 
-
-
-
-    <br>
-
-
-
-
-
-
-
-
-<!DOCTYPE html>
-<html lang="en">
+    <br><br><br><br><br><br>
+    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ company_name }} Portfolio</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <!-- Include Plotly.js -->
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <title>Add from CSV</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f8f9fa;
-            color: #343a40;
         }
         .container {
-            max-width: 800px;
-            margin: 0 auto;
+            max-width: 600px;
+            margin: 50px auto;
+
             padding: 20px;
-            background-color: #fff;
+            background-color: #ffffff;
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
         }
-        .header {
+        h1 {
             text-align: center;
+            color: #1da1f2;
             margin-bottom: 30px;
         }
-        .icon {
-            font-size: 48px;
-            color: #6c757d;
-        }
-        h1 {
-            color: #343a40;
-            margin-top: 0;
-        }
-        h2 {
-            color: #343a40;
-            margin-top: 30px;
-            margin-bottom: 15px;
-        }
-        ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        li {
-            margin-bottom: 10px;
-        }
-        .no-data {
+        form {
             text-align: center;
-            font-style: italic;
-            color: #6c757d;
         }
-        .plot-container {
-            text-align: center;
-            margin-bottom: 20px;
+        input[type="file"] {
+            display: none;
+        }
+        label {
+            display: inline-block;
+            background-color: #2fa84a;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        label:hover {
+            background-color: #0056b3;
+        }
+        button[type="submit"] {
+            background-color: #1da1f2;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button[type="submit"]:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1><i class="fas fa-building icon"></i> {{ company_name }} Portfolio</h1>
-        </div>
-        <div class="plot-container">
-            <h2><i class="fas fa-chart-line"></i> Portfolio Performance</h2>
-            {{ portfolio_returns_chart|safe }}
-
-      
-        </div>
-        <center>
-        {% if company_portfolio_metrics %}
-            <div>
-                <h2><i class="fas fa-chart-area"></i> Portfolio Metrics</h2>
-                <ul>
-                    {% for key, value in company_portfolio_metrics.items %}
-                        <li>{{ key }}: {{ value }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-        {% else %}
-            <p class="no-data">No portfolio data available for {{ company_name }}.</p>
-        {% endif %}
+        <h1>Add from CSV</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="csv_file">Choose CSV File</label>
+            <input type="file" id="csv_file" name="csv_file">
+            <button type="submit"><i class="fas fa-file-upload icon"></i>  Upload CSV</button>
+        </form>
     </div>
-</center>
 </body>
 </html>
-
-<br>
+<br><br><br><br><br><br><br><br>
 
 
 

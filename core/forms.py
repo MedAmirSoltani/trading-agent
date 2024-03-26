@@ -28,3 +28,19 @@ class PreferencesForm(forms.ModelForm):
     class Meta:
         model = Preferences
         fields = ['risk_tolerance', 'investment_horizon', 'liquidity_needs', 'investment_objective', 'knowledge_experience', 'sectors', 'available_funds']
+
+from .models import ForumTopic, ForumComment
+
+class ForumTopicForm(forms.ModelForm):
+    class Meta:
+        model = ForumTopic
+        fields = ['topic']
+
+class ForumCommentForm(forms.ModelForm):
+    class Meta:
+        model = ForumComment
+        fields = ['comment']
+        
+
+class CsvUploadForm(forms.Form):
+    csv_file = forms.FileField(label='Upload CSV File')        
