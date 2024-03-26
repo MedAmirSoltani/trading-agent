@@ -317,7 +317,22 @@ import csv
 from .forms import CsvUploadForm
 def forum(request):
     topics = ForumTopic.objects.all()
-    return render(request, 'forum.html', {'topics': topics})
+
+    # Paginate the topics
+    paginator = Paginator(topics, 5)  
+    page_number = request.GET.get('page')
+    try:
+        page_obj = paginator.page(page_number)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        page_obj = paginator.page(paginator.num_pages)
+
+    return render(request, 'forum.html', {'page_obj': page_obj})
+
+
 
 def topic_detail(request, topic_id):
     topic = ForumTopic.objects.get(id=topic_id)
