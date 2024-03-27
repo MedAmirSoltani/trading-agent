@@ -10,14 +10,35 @@ from scipy.optimize import minimize
 from django.shortcuts import render
 from django.contrib.auth import login, authenticate
 from .forms import CustomUserCreationForm, CustomAuthenticationForm,CustomUserChangeForm,PreferencesForm
-import joblib
-from pypfopt import EfficientFrontier
-from pypfopt import risk_models
+from django.http import JsonResponse
 import matplotlib.pyplot as plt
-import io
-import base64
+import yfinance as yf
 def home(request):
-    return render(request, 'home.html')
+    # Fetch real-time data from Yahoo Finance for a specific stock (e.g., S&P 500)
+    stock_data = yf.download('^GSPC', period='1d', interval='1m')
+
+    # Create a candlestick trace
+    trace = go.Candlestick(
+        x=stock_data.index,
+        open=stock_data['Open'],
+        high=stock_data['High'],
+        low=stock_data['Low'],
+        close=stock_data['Close'],
+        name='S&P 500'
+    )
+
+    # Define layout with rangeslider
+    layout = go.Layout(
+        title='Real-Time World Stock Price Plot',
+        xaxis=dict(title='Time', rangeslider=dict(visible=True)),  # Add rangeslider
+        yaxis=dict(title='Price')
+    )
+
+    # Create Plotly figure
+    fig = go.Figure(data=[trace], layout=layout)
+    plot_div = fig.to_html(full_html=False)
+
+    return render(request, 'home.html', {'plot_div': plot_div})
 def how(request):
     return render(request, 'how.html')
 def about(request):
@@ -44,47 +65,51 @@ def dashboard(request):
     # Forecast future prices
     forecast = model_fit.forecast(steps=10)
 
-    # Create Plotly trace for the line chart
-    trace = go.Scatter(x=df['Date'],
-                       y=df['Close'],
-                       mode='lines',
-                       name='Historical Price',
-                       hoverinfo='x+y+text',
-                       text=df.apply(lambda row: f"Date: {row['Date']}<br>Price: {row['Close']}<br>Open: {row['Open']}<br>High: {row['High']}<br>Low: {row['Low']}", axis=1))
+    # Create Plotly trace for the candlestick chart
+    trace_candlestick = go.Candlestick(
+        x=df['Date'],
+        open=df['Open'],
+        high=df['High'],
+        low=df['Low'],
+        close=df['Close'],
+        name='Historical Price',
+        increasing=dict(line=dict(color='green')),  # Color for increasing candles
+        decreasing=dict(line=dict(color='red'))     # Color for decreasing candles
+    )
 
     # Add forecasted prices to the trace
     forecast_dates = pd.date_range(start=df['Date'].iloc[-1], periods=5)[1:]
-    trace_forecast = go.Scatter(x=forecast_dates,
-                                y=forecast,
-                                mode='lines',
-                                name='Forecasted Price',
-                                line=dict(color='green'),  # Change color for forecasted prices
-                                hoverinfo='x+y',
-                                showlegend=True)
+    trace_forecast = go.Scatter(
+        x=forecast_dates,
+        y=forecast,
+        mode='lines',
+        name='Forecasted Price',
+        line=dict(color='blue'),  # Change color for forecasted prices
+        hoverinfo='x+y',
+        showlegend=True
+    )
 
     # Define layout for the main plot
-    layout = go.Layout(title='Tunindex Price Chart with Forecast',
-                       xaxis=dict(title='Date', tickformat='%d-%m-%Y'),
-                       yaxis=dict(title='Price', tickformat=',.0f'),
-                       hovermode='closest',
-                       showlegend=True,
-                       font=dict(family='Arial, sans-serif', size=12, color='black'),
-                       margin=dict(l=80, r=50, t=80, b=50))
+    layout = go.Layout(
+        title='Tunindex Price Chart with Forecast',
+        xaxis=dict(title='Date', tickformat='%d-%m-%Y'),
+        yaxis=dict(title='Price', tickformat=',.0f'),
+        hovermode='closest',
+        showlegend=True,
+        font=dict(family='Arial, sans-serif', size=12, color='black'),
+        margin=dict(l=80, r=50, t=80, b=50)
+    )
 
     # Create Plotly figure
-    fig = go.Figure(data=[trace, trace_forecast], layout=layout)
+    fig = go.Figure(data=[trace_candlestick, trace_forecast], layout=layout)
 
     # Add date range selector
     fig.update_layout(xaxis_rangeslider_visible=True)
 
     # Convert Plotly figure to JSON
     plotly_chart = fig.to_json()
+
     return render(request, 'dashboard.html', {'plotly_chart': plotly_chart})
-
-
-
-
-
 
 
 

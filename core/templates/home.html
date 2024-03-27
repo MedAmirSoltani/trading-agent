@@ -238,6 +238,60 @@
     <!-- end slider section -->
   </div>
 
+
+
+
+ <!-- auto section -->
+
+ <section class="auto_section layout_padding">
+  <div class="container">
+      <div class="heading_container">
+          <h2>Real Time Stock Market Data</h2>
+      </div>
+      <div id="plotly-plot">
+        <!-- Plotly plot will be inserted here -->
+        {{ plot_div|safe }}
+    </div>
+
+    <!-- Refresh the page every 5 seconds -->
+    <meta http-equiv="refresh" content="500">
+  </div>
+</section>
+<!-- end auto section -->
+
+<style>
+  .auto_section {
+      background-color: #e5e8eb;
+      padding: 50px 0;
+  }
+  .container {
+      position: relative;
+      max-width: 1200px;
+      margin: auto;
+      padding: 0 15px;
+  }
+  .heading_container {
+      text-align: center;
+      margin-bottom: 50px;
+  }
+  .heading_container h2 {
+      font-size: 36px;
+      color: #343a40;
+      margin-bottom: 0;
+  }
+  #plotly-plot {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+  }
+</style>
+
+
+
+
+
+
   <!-- how section -->
   <section class="how_section layout_padding">
     <div class="heading_container">
@@ -383,45 +437,7 @@
 
 
 
-  <!-- auto section -->
-
-  <section class="auto_section layout_padding">
-    <div class="container">
-      <div class="heading_container">
-        <h2>
-          Start trading Now
-        </h2>
-      </div>
-      <div class="box">
-        <div class="img-box">
-          <img src="{% static 'images/logo.png' %}" alt="">
-
-
-        </div>
-        <div class="detail-box">
-          <p>
-            Start trading now with our cutting-edge intelligent trading platform. Gain access to advanced analytics,
-            real-time market data, and powerful trading tools to make informed investment decisions. Whether you're a
-            seasoned investor or new to trading, our platform offers a seamless and intuitive experience for managing
-            your portfolio and maximizing returns. Join thousands of satisfied users and take control of your financial
-            future today! </p>
-          <div class="btn-box">
-            {% if user.is_authenticated %}
-            <a href="{% url 'how' %}">
-              Get Started
-            </a>
-            {% else %}
-            <a href="{% url 'login' %}">
-              Get Started
-            </a>
-            {% endif %}
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- end auto section -->
-
+ 
 
   <!-- footer section -->
   <section class="container-fluid footer_section">
