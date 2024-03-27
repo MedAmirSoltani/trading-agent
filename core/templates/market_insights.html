@@ -177,34 +177,150 @@
 
 
 
-
-
-
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Market Insights</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f8f9fa;
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <style>
+            /* Reset default margin and padding */
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+    
+            body {
+                font-family: 'Arial', sans-serif;
+                background-color: #f8f9fa;
+                color: #343a40;
+            }
+    
+            .container {
+                max-width: 900px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #fff;
+                border-radius: 10px;
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            }
+    
+            h1 {
+                color: #343a40;
+                margin-top: 0;
+                text-align: center;
+                font-size: 36px;
+                margin-bottom: 20px;
+            }
+    
+            h2 {
+                color: #343a40;
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+    
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+            }
+    
+            th, td {
+                border: 1px solid #dddddd;
+                text-align: left;
+                padding: 10px;
+            }
+    
+            th {
+                background-color: #f2f2f2;
+            }
+    
+            tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+    
+            .pagination {
+                margin-top: 20px;
+                text-align: center;
+            }
+    
+            .pagination a, .pagination .current-page {
+                color: #007bff;
+                text-decoration: none;
+                padding: 8px 16px;
+                transition: background-color 0.3s, color 0.3s;
+                border: 1px solid #ddd;
+                margin: 0 2px;
+                border-radius: 4px;
+                display: inline-block;
+            }
+    
+            .pagination a:hover {
+                background-color: #f2f2f2;
+            }
+    
+            .pagination .current-page {
+                font-weight: bold;
+                background-color: #007bff;
+                color: #fff;
+            }
+    
+            .pagination .arrows {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-top: 10px;
+            }
+    
+            .pagination .arrows a {
+                margin: 0 5px;
+                background-color: #007bff;
+                color: #fff;
+                border: 1px solid #007bff;
+                padding: 8px 12px;
+                border-radius: 4px;
+                text-decoration: none;
+                transition: background-color 0.3s, color 0.3s;
+            }
+    
+            .pagination .arrows a:hover {
+                background-color: #0056b3;
+                border-color: #0056b3;
+            }
+    
+            .sentiment {
+                margin-top: 30px;
+                text-align: center;
+            }
+    
+            .sentiment h2 {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+    
+            .sentiment p {
+                font-size: 18px;
+                margin-bottom: 10px;
+            }
+    
+            .positive {
+                color: #28a745;
+            }
+    
+            .neutral {
+                color: #6c757d;
+            }
+    
+            .negative {
+                color: #dc3545;
+            }
+            h2 {
             color: #343a40;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 24px;
+            text-align: center;
         }
         h1 {
             color: #343a40;
@@ -212,104 +328,78 @@
             text-align: center;
             font-size: 36px;
         }
-        h2 {
-            color: #343a40;
-            margin-top: 30px;
-            margin-bottom: 15px;
-            font-size: 24px;
-        }
-        ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        li {
-            margin-bottom: 10px;
-            font-size: 18px;
-        }
-        a {
-            text-decoration: none;
-            color: #007bff;
-        }
-        .sentiment {
-            margin-top: 20px;
-        }
-        .positive {
-            color: #28a745;
-        }
-        .neutral {
-            color: #6c757d;
-        }
-        .negative {
-            color: #dc3545;
-        }
-        .chart {
-            margin-top: 30px;
-            text-align: center;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1><i class="fas fa-chart-line"></i> Market Insights</h1>
-        <div>
-            <h2>Select a Company</h2>
-            <ul>
-                {% for company_name in company_names %}
-                    <li><a href="{% url 'company_portfolio' company_name=company_name %}">{{ company_name }}</a></li>
-                {% endfor %}
-            </ul>
-
-            <h2>Market Indicators</h2>
-            <ul>
-                {% for indicator in market_indicators %}
-                    <li>{{ indicator }}</li>
-                {% endfor %}
-            </ul>
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Market Insights <i class="fas fa-chart-line"></i></h1>
+    
+            <!-- Display Plotly chart -->
+            <div class="chart" id="plotly-chart"></div>
+    
+            <!-- Table to display companies -->
+         
+        <h2>Performance <i class="fas fa-tachometer-alt"></i></h2>
+       
+            <table id="company-table">
+                <thead>
+                    <tr>
+                        <th>Company Name</th>
+                        <th>Open</th>
+                        <th>Price</th>
+                        <th>Change</th>
+                        <th>Sector</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in table_data %}
+                    <tr>
+                        <td>{{ row.value }}</td>
+                        <td>{{ row.Open }}</td>
+                        <td>{{ row.Price }}</td>
+                        <td class="{% if row.Change > 0 %}fas fa-caret-up positive{% else %}fas fa-caret-down negative{% endif %}">{{ row.Change }}%</td>
+                        <td>{{ row.Sector }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+    
+            <!-- Pagination -->
+            <div class="pagination">
+                <div class="arrows">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1">&laquo; First</a>
+                        <a href="?page={{ page_obj.previous_page_number }}">&lsaquo; Prev</a>
+                    {% endif %}
+                    <span class="current-page">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">Next &rsaquo;</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+                    {% endif %}
+                </div>
+            </div>
+    
+            <!-- Sentiment analysis section -->
+            <div class="sentiment">
+                <h2>News Sentiment Analysis <i class="far fa-newspaper"></i></h2>
+                <p><i class="far fa-thumbs-up positive"></i> Positive Sentiment: {{ news_sentiment.Positive }}</p>
+                <p><i class="far fa-meh-blank neutral"></i> Neutral Sentiment: {{ news_sentiment.Neutral }}</p>
+                <p><i class="far fa-thumbs-down negative"></i> Negative Sentiment: {{ news_sentiment.Negative }}</p>
+            </div>
         </div>
-        <div class="sentiment">
-            <h2>News Sentiment Analysis</h2>
-            <p><i class="far fa-thumbs-up positive"></i> Positive Sentiment: {{ news_sentiment.Positive }}</p>
-            <p><i class="far fa-meh-blank neutral"></i> Neutral Sentiment: {{ news_sentiment.Neutral }}</p>
-            <p><i class="far fa-thumbs-down negative"></i> Negative Sentiment: {{ news_sentiment.Negative }}</p>
-        </div>
-        <div class="chart">
-            <h2>Market Performance</h2>
-            <!-- Add your Plotly chart here -->
-            <div id="market-chart"></div>
-        </div>
-    </div>
-
-    <!-- Include Plotly.js -->
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script>
-        // Define data for the plot (replace with your data)
-        var data = [
-            {
-                x: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-                y: [100, 120, 140, 130, 150],
-                type: 'scatter',
-                mode: 'lines',
-                line: {color: 'blue'}
-            }
-        ];
-
-        // Define layout options for the plot
-        var layout = {
-            title: 'Market Performance',
-            xaxis: {title: 'Month'},
-            yaxis: {title: 'Value ($)'}
-        };
-
-        // Plot the chart
-        Plotly.newPlot('market-chart', data, layout);
-    </script>
-</body>
-</html>
-
-
-
-
+    
+        <!-- JavaScript to render Plotly chart -->
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <script>
+            // Retrieve Plotly chart JSON from Django view
+            var plotlyChartJson = '{{ plotly_chart|safe }}';
+    
+            // Render Plotly chart
+            Plotly.newPlot('plotly-chart', JSON.parse(plotlyChartJson).data, JSON.parse(plotlyChartJson).layout);
+        </script>
+    </body>
+    </html>
+    
 <br>
 
 

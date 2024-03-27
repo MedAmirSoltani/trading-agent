@@ -26,7 +26,6 @@ urlpatterns = [
     path('sentiment_analysis/', sentiment_analysis, name='sentiment_analysis'),
     path('download_csv/', download_csv, name='download_csv'),
 
-
     path('', user_login, name='login'),
     path('company_portfolio/<str:company_name>/', company_portfolio, name='company_portfolio'),
 ]
