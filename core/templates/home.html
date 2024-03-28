@@ -202,9 +202,7 @@
                         </h2>
                         <div class="">
                           {% if user.is_authenticated %}
-                          <a href="{% url 'how' %}">
-                            Get Started
-                          </a>
+                          <a href="{% url 'how' %}">Get Started</a>
                           {% else %}
                           <a href="{% url 'login' %}">
                             Get Started
