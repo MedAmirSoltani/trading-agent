@@ -1,6 +1,8 @@
 
 {% load static %}
 <!DOCTYPE html>
+      <!-- Include jQuery -->
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <html>
   <style>
     /* Add this CSS to style the dropdown menu */
@@ -328,56 +330,132 @@
             text-align: center;
             font-size: 36px;
         }
+        .forum-actions {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .forum-actions a {
+            text-decoration: none;
+            color: #fff;
+            background-color: #2fa84a;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin: 0 10px;
+            transition: background-color 0.3s ease;
+        }
+        .forum-actions a:hover {
+            background-color: #66d07d;
+        }
+        /* Style for sector detail buttons */
+.sector-buttons {
+  margin-bottom: 20px; /* Adjust margin as needed */
+}
+
+.sector-button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-right: 10px;
+  background-color: #3498db; /* Change to your preferred background color */
+  color: #fff; /* Text color */
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.sector-button:hover {
+  background-color: #2980b9; /* Darker shade on hover */
+}
+
+
+
         </style>
     </head>
     <body>
         <div class="container">
             <h1>Market Insights <i class="fas fa-chart-line"></i></h1>
-    
-            <!-- Display Plotly chart -->
-            <div class="chart" id="plotly-chart"></div>
-    
+
+
+
+            
+<!-- Display Plotly chart -->
+<div class="chart" id="plotly-chart"></div>
+
+
             <!-- Table to display companies -->
          
         <h2>Performance <i class="fas fa-tachometer-alt"></i></h2>
-       
-            <table id="company-table">
-                <thead>
-                    <tr>
-                        <th>Company Name</th>
-                        <th>Open</th>
-                        <th>Price</th>
-                        <th>Change</th>
-                        <th>Sector</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for row in table_data %}
-                    <tr>
-                        <td>{{ row.value }}</td>
-                        <td>{{ row.Open }}</td>
-                        <td>{{ row.Price }}</td>
-                        <td class="{% if row.Change > 0 %}fas fa-caret-up positive{% else %}fas fa-caret-down negative{% endif %}">{{ row.Change }}%</td>
-                        <td>{{ row.Sector }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-    
-            <!-- Pagination -->
-            <div class="pagination">
-                <div class="arrows">
-                    {% if page_obj.has_previous %}
-                        <a href="?page=1">&laquo; First</a>
-                        <a href="?page={{ page_obj.previous_page_number }}">&lsaquo; Prev</a>
-                    {% endif %}
-                    <span class="current-page">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
-                    {% if page_obj.has_next %}
-                        <a href="?page={{ page_obj.next_page_number }}">Next &rsaquo;</a>
-                        <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
-                    {% endif %}
-                </div>
-            </div>
+
+
+
+
+
+
+
+
+        <center>
+          <!-- Sector detail buttons with icons -->
+          <div class="sector-buttons">
+            <a class="sector-button" href="{% url 'sector_details' 'bank' %}">
+              <i class="fas fa-building"></i> Bank
+            </a>
+            <a class="sector-button" href="{% url 'sector_details' 'assurance' %}">
+              <i class="fas fa-shield-alt"></i> Assurance
+            </a>
+            <a class="sector-button" href="{% url 'sector_details' 'leasing' %}">
+              <i class="fas fa-car"></i> Leasing
+            </a>
+            <a class="sector-button" href="{% url 'sector_details' 'other' %}">
+              <i class="fas fa-cubes"></i> Other
+            </a>
+          </div></center>
+          
+          
+
+
+
+        <style>
+          /* Optional custom styles */
+          th, td { padding: 8px; }
+      </style>
+  </head>
+  <body>
+      <table id="company-table">
+          <thead>
+              <tr>
+                  <th>Company Name</th>
+                  <th>Open</th>
+                  <th>Price</th>
+                  <th>Change</th>
+                  <th>Sector</th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for row in table_data %}
+              <tr>
+                <td><a href="{% url 'company_details' company_name=row.value %}">{{ row.value }}</a></td>                  <td>{{ row.Open }}</td>
+                  <td>{{ row.Price }}</td>
+                  <td class="{% if row.Change > 0 %}positive{% else %}negative{% endif %}">{{ row.Change }}%</td>
+                  <td>{{ row.Sector }}</td>
+              </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+  
+
+      <!-- Include DataTables JS -->
+      <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css" />
+  
+      <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script> 
+           <script>
+       let table = new DataTable('#company-table', {
+            // configuration options
+            // For example:
+            paging: true, // Enable pagination
+            searching: true // Enable searching
+        });
+ </script>
+
     
             <!-- Sentiment analysis section -->
             <div class="sentiment">
@@ -385,6 +463,10 @@
                 <p><i class="far fa-thumbs-up positive"></i> Positive Sentiment: {{ news_sentiment.Positive }}</p>
                 <p><i class="far fa-meh-blank neutral"></i> Neutral Sentiment: {{ news_sentiment.Neutral }}</p>
                 <p><i class="far fa-thumbs-down negative"></i> Negative Sentiment: {{ news_sentiment.Negative }}</p>
+                <div class="forum-actions">
+                  <a href="{% url 'sentiment_analysis' %}" style="background-color: #dc3545;"><i class="fas fa-chart-line"></i> Sentiment Analysis</a>
+              </div>
+              
             </div>
         </div>
     

@@ -24,7 +24,7 @@ def home(request):
         high=stock_data['High'],
         low=stock_data['Low'],
         close=stock_data['Close'],
-        name='S&P 500'
+        name='^GSPC'
     )
 
     # Define layout with rangeslider
@@ -186,18 +186,14 @@ def market_insights(request):
     # Prepare data for the table
     table_data = df_latest[['value', 'Open', 'Price', 'Change','Sector']]
 
-    # Paginate the table data
-    paginator = Paginator(table_data, 6)  # Show 6 items per page
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
 
     # Convert the current page object to a list of dictionaries
-    table_data_list = page_obj.object_list.to_dict(orient='records')
+    table_data_list = table_data.to_dict(orient='records')
 
     # Sentiment analysis data (dummy data for now)
     news_sentiment = {'Positive': 0.6, 'Neutral': 0.3, 'Negative': 0.1}
 
-    return render(request, 'market_insights.html', {'plotly_chart': plotly_chart, 'news_sentiment': news_sentiment, 'table_data': table_data_list, 'page_obj': page_obj})
+    return render(request, 'market_insights.html', {'plotly_chart': plotly_chart, 'news_sentiment': news_sentiment, 'table_data': table_data_list})
 
 
 
@@ -209,6 +205,143 @@ def market_insights(request):
 
 
 
+def company_details(request, company_name):
+    # Load CSV data
+    df = pd.read_csv('C:/Users/solta/OneDrive/Bureau/project/trading-agent/data/all_data2.csv')
+
+    # Filter data for the specified company
+    df_company = df[df['value'] == company_name]
+
+    # Convert Date column to datetime
+    df_company['Date'] = pd.to_datetime(df_company['Date'])
+
+    # Fit an ARIMA model
+    model = ARIMA(df_company['Price'], order=(5, 1, 0))
+    model_fit = model.fit()
+
+    # Forecast future prices
+    forecast = model_fit.forecast(steps=10)
+
+    # Additional information about the company
+    company_info = {
+        'name': company_name,
+        'latest_price': df_company['Price'].iloc[-1],
+        'open_price': df_company['Open'].iloc[-1],
+        'high_price': df_company['High'].max(),
+        'low_price': df_company['Low'].min(),
+        'sector': df_company['Sector'].iloc[0]  # Assuming the sector is constant for the company
+    }
+
+    # Create Plotly trace for the line chart
+    trace = go.Scatter(x=df_company['Date'],
+                       y=df_company['Price'],
+                       mode='lines',  # Display only points
+                       name='Price',
+                       hoverinfo='x+y+text',
+                       text=df_company.apply(lambda row: f"Date: {row['Date']}<br>Price: {row['Price']}<br>Open: {row['Open']}<br>High: {row['High']}<br>Low: {row['Low']}", axis=1))
+
+    # Add forecasted prices to the trace
+    forecast_dates = pd.date_range(start=df_company['Date'].iloc[-1], periods=5)[1:]
+    trace_forecast = go.Scatter(x=forecast_dates,
+                                y=forecast,
+                                mode='lines',
+                                name='Forecasted Price',
+                                line=dict(color='green'),  # Change color for forecasted prices
+                                hoverinfo='x+y',
+                                showlegend=True)
+
+    # Define layout for the main plot
+    layout = go.Layout(title=f'Stock Market Price Chart for {company_name} with Forecast',
+                       xaxis=dict(title='Date', tickformat='%d-%m-%Y'),
+                       yaxis=dict(title='Price', tickformat=',.0f'),
+                       hovermode='closest',
+                       showlegend=True,
+                       font=dict(family='Arial, sans-serif', size=12, color='black'),
+                       margin=dict(l=80, r=50, t=80, b=50))
+
+    # Create Plotly figure
+    fig = go.Figure(data=[trace, trace_forecast], layout=layout)
+
+    # Add date range selector
+    fig.update_layout(xaxis_rangeslider_visible=True)
+
+    # Convert Plotly figure to JSON
+    plotly_chart = fig.to_json()
+
+    # Pass data to the template for rendering
+    return render(request, 'company_details.html', {'plotly_chart': plotly_chart, 'company_info': company_info})
+
+
+
+
+
+
+
+
+def sector_details(request, sector_name):
+    # Load CSV data
+    df = pd.read_csv('C:/Users/solta/OneDrive/Bureau/project/trading-agent/data/all_data2.csv')
+
+    # Filter data for the specified sector
+    df_sector = df[df['Sector'] == sector_name]
+
+    # Convert Date column to datetime
+    df_sector['Date'] = pd.to_datetime(df_sector['Date'])
+
+    # Fit an ARIMA model
+    model = ARIMA(df_sector['Price'], order=(5, 1, 0))
+    model_fit = model.fit()
+
+    # Forecast future prices
+    forecast = model_fit.forecast(steps=10)
+
+    # Additional information about the sector
+    sector_info = {
+        'name': sector_name,
+        'average_price': df_sector['Price'].mean(),
+        'highest_price': df_sector['Price'].max(),
+        'lowest_price': df_sector['Price'].min(),
+        'total_companies': df_sector['value'].nunique()
+    }
+
+    # Create Plotly trace for the line chart
+    trace = go.Scatter(x=df_sector['Date'],
+                       y=df_sector['Price'],
+                       mode='lines',  # Display only points
+                       name='Price',
+                       hoverinfo='x+y+text',
+                       text=df_sector.apply(lambda row: f"Date: {row['Date']}<br>Price: {row['Price']}<br>Open: {row['Open']}<br>High: {row['High']}<br>Low: {row['Low']}", axis=1))
+
+    # Add forecasted prices to the trace
+    forecast_dates = pd.date_range(start=df_sector['Date'].iloc[-1], periods=5)[1:]
+    trace_forecast = go.Scatter(x=forecast_dates,
+                                y=forecast,
+                                mode='lines',
+                                name='Forecasted Price',
+                                line=dict(color='green'),  # Change color for forecasted prices
+                                hoverinfo='x+y',
+                                showlegend=True)
+
+    # Define layout for the main plot
+    layout = go.Layout(title=f'Stock Market Price Chart for {sector_name} with Forecast',
+                       xaxis=dict(title='Date', tickformat='%d-%m-%Y'),
+                       yaxis=dict(title='Price', tickformat=',.0f'),
+                       hovermode='closest',
+                       showlegend=True,
+                       font=dict(family='Arial, sans-serif', size=12, color='black'),
+                       margin=dict(l=80, r=50, t=80, b=50))
+
+    # Create Plotly figure
+    fig = go.Figure(data=[trace, trace_forecast], layout=layout)
+
+    # Add date range selector
+    fig.update_layout(xaxis_rangeslider_visible=True)
+
+    # Convert Plotly figure to JSON
+    plotly_chart = fig.to_json()
+
+    # Pass data to the template for rendering
+    return render(request, 'sector_details.html', {'plotly_chart': plotly_chart, 'sector_info': sector_info})
 
 
 
@@ -219,11 +352,7 @@ def market_insights(request):
 
 
 
-
-
-
-
-def portfolio_analysis(request):
+def portfolio_analysis(request):    
     # Dummy data for demonstration
     portfolio_metrics = {'Cumulative Returns': 0.25, 'Volatility': 0.15, 'Sharpe Ratio': 1.5, 'Max Drawdown': 0.1}
     benchmark_performance = {'Cumulative Returns': 0.20, 'Volatility': 0.12, 'Sharpe Ratio': 1.3, 'Max Drawdown': 0.12}
