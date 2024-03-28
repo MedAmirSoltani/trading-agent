@@ -31,7 +31,7 @@ def home(request):
         high=stock_data['High'],
         low=stock_data['Low'],
         close=stock_data['Close'],
-        name='^GSPC'
+        name='World Stock Price'
     )
 
     # Generate future timestamps for the forecast
@@ -43,7 +43,7 @@ def home(request):
         x=future_timestamps,
         y=forecast,
         mode='lines',
-        name='ARIMA Forecast',
+        name='Forecast',
         line=dict(color='blue', width=2)
     )
 
