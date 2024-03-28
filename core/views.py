@@ -49,7 +49,7 @@ def home(request):
 
     # Define layout with rangeslider
     layout = go.Layout(
-        title='Real-Time World Stock Price Plot with ARIMA Forecast',
+        title='Real-Time World Stock Price Plot with Forecast',
         xaxis=dict(title='Time', rangeslider=dict(visible=True)),  # Add rangeslider
         yaxis=dict(title='Price')
     )
