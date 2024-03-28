@@ -159,7 +159,7 @@
                     
                     {% if user.is_authenticated %}
                     <li class="nav-item">
-                      <a class="nav-link"> Available Funds: $ {{ user.preferences.available_funds }} </a>
+                      <a class="nav-link"> Available Funds: {{ user.preferences.available_funds }}  TND </a>
                     </li>
                       {% endif %}
                
