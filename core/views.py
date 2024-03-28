@@ -17,6 +17,13 @@ def home(request):
     # Fetch real-time data from Yahoo Finance for a specific stock (e.g., S&P 500)
     stock_data = yf.download('^GSPC', period='1d', interval='1m')
 
+    # Perform ARIMA prediction
+    # Example: ARIMA model with p=5, d=1, and q=0
+    model = ARIMA(stock_data['Close'], order=(5, 1, 0))
+    fitted_model = model.fit()
+    forecast_steps = 15  # 180 steps correspond to 3 hours (60 minutes/hour * 3 hours)
+    forecast = fitted_model.forecast(steps=forecast_steps)
+
     # Create a candlestick trace
     trace = go.Candlestick(
         x=stock_data.index,
@@ -27,18 +34,33 @@ def home(request):
         name='^GSPC'
     )
 
+    # Generate future timestamps for the forecast
+    last_timestamp = stock_data.index[-1]
+    future_timestamps = pd.date_range(start=last_timestamp, periods=forecast_steps+1, closed='right', freq='T')[1:]
+
+    # Add ARIMA forecast as a scatter plot
+    forecast_trace = go.Scatter(
+        x=future_timestamps,
+        y=forecast,
+        mode='lines',
+        name='ARIMA Forecast',
+        line=dict(color='blue', width=2)
+    )
+
     # Define layout with rangeslider
     layout = go.Layout(
-        title='Real-Time World Stock Price Plot',
+        title='Real-Time World Stock Price Plot with ARIMA Forecast',
         xaxis=dict(title='Time', rangeslider=dict(visible=True)),  # Add rangeslider
         yaxis=dict(title='Price')
     )
 
     # Create Plotly figure
-    fig = go.Figure(data=[trace], layout=layout)
+    fig = go.Figure(data=[trace, forecast_trace], layout=layout)
     plot_div = fig.to_html(full_html=False)
 
     return render(request, 'home.html', {'plot_div': plot_div})
+
+
 def how(request):
     return render(request, 'how.html')
 def about(request):
