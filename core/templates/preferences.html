@@ -1,81 +1,141 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-  <style>
-    /* Add this CSS to style the dropdown menu */
-  .dropdown {
-    position: relative;
-    display: inline-block;
-  }
-  /* CSS for dropdown button */
-  .dropdown-btn {
-    background-color: transparent;
-    border: none;
-    color: #fff;
-    cursor: pointer;
-    padding: 10px 20px;
-    font-size: 16px;
-    text-transform: capitalize; /* Capitalize the first letter of the name */
-    display: flex;
-    align-items: center;
-  }
-  
-  .dropdown-btn:hover,
-  .dropdown-btn:focus {
-    background-color: rgba(255, 255, 255, 0.1); /* Lighten the background color on hover */
-  }
-  
-  /* CSS for dropdown content */
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #333; /* Background color of the dropdown content */
-    min-width: 160px;
-    z-index: 1;
-  }
-  
-  .dropdown-content a {
-    color: #fff; /* Text color of the links */
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-  }
-  
-  .dropdown-content a:hover {
-    background-color: #555; /* Darken the background color of the link on hover */
-  }
-  
-  /* Show the dropdown content when the dropdown button is hovered over */
-  .dropdown:hover .dropdown-content {
-    display: block;
-  
-  }
-  /* CSS for login button */
-  .login-btn {
-    background-color: #ff5722; /* Background color of the button */
-    color: #fff; /* Text color of the button */
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
-  }
-  
-  .login-btn:hover {
-    background-color: #ff7043; /* Darker background color on hover */
-  }
-  
-  .login-btn:focus {
-    outline: none; /* Remove the default focus outline */
-  }
-  .logo img {
-    margin-bottom: -50px; /* Add margin to the bottom */
-    margin-top: -60px; /* Add margin to the bottom */
+   
+<style>
+  body {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+}
+
+.container_add {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #FFA500;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="date"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button.btn {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #FFA500;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button.btn:hover {
+
+  background-color: #ff5722;
+}
+
+</style>
+
+<style>
+  /* Add this CSS to style the dropdown menu */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+/* CSS for dropdown button */
+.dropdown-btn {
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 10px 20px;
+  font-size: 16px;
+  text-transform: capitalize; /* Capitalize the first letter of the name */
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-btn:hover,
+.dropdown-btn:focus {
+  background-color: rgba(255, 255, 255, 0.1); /* Lighten the background color on hover */
+}
+
+/* CSS for dropdown content */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #333; /* Background color of the dropdown content */
+  min-width: 160px;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: #fff; /* Text color of the links */
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #555; /* Darken the background color of the link on hover */
+}
+
+/* Show the dropdown content when the dropdown button is hovered over */
+.dropdown:hover .dropdown-content {
+  display: block;
 
 }
-  
-  </style>
+/* CSS for login button */
+.login-btn {
+  background-color: #ff5722; /* Background color of the button */
+  color: #fff; /* Text color of the button */
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.login-btn:hover {
+  background-color: #ff7043; /* Darker background color on hover */
+}
+
+.login-btn:focus {
+  outline: none; /* Remove the default focus outline */
+}
+.logo img {
+  margin-bottom: -50px; /* Add margin to the bottom */
+  margin-top: -60px; /* Add margin to the bottom */
+
+}
+
+</style>
+
      <!-- Link to Font Awesome CSS -->
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
      <!-- Link to custom CSS file -->
@@ -274,13 +334,7 @@
 
 
 
-  <!-- footer section -->
-  <section class="container-fluid footer_section">
-    <p>
-      &copy; 2024 All Rights Reserved By Value
-    </p>
-  </section>
-  <!-- footer section -->
+ 
 
   <script type="text/javascript" src="  {% static 'js/jquery-3.4.1.min.js' %}
   "></script>

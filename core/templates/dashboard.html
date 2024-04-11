@@ -201,7 +201,7 @@
                 background-color: #f8f9fa;
                 color: #343a40;
             }
-            .container {
+            .container_add {
                 max-width: 800px;
                 margin: 0 auto;
                 padding: 20px;
@@ -231,7 +231,7 @@
     </head>
     <br>
     <body>
-        <div class="container">
+        <div class="container_add">
           <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
           <h1>Optimized Portfolio Analysis</h1>
           <!-- Display Plotly chart -->
@@ -250,16 +250,8 @@
     
     </body>
     </html>
-    
-<br><br>
-      <!-- footer section -->
-      <section class="container-fluid footer_section">
-        <p>
-          &copy; 2024 All Rights Reserved By Value
-        </p>
-      </section>
-      <!-- footer section -->
-
+    <br>
+    {% include "footer.html" %}
       <script type="text/javascript" src="  {% static 'js/jquery-3.4.1.min.js' %}
   "></script>
       <script type="text/javascript" src="  {% static 'js/bootstrap.js' %}

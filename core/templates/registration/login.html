@@ -1,4 +1,39 @@
 {% load static %}
+
+
+<link rel="manifest" href="{% static 'manifest.json' %}">
+
+
+<script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/static/sw.js').then(function(registration) {
+          console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        }, function(err) {
+          console.log('ServiceWorker registration failed: ', err);
+        }).catch(function(err) {
+          console.log(err);
+        });
+      });
+    } else {
+      console.log('Service worker not supported in this browser.');
+    }
+  </script>
+  
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/static/sw.js').then(function(registration) {
+      // Registration was successful
+      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }, function(err) {
+      // registration failed :(
+      console.log('ServiceWorker registration failed: ', err);
+    });
+  });
+}
+
+</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,11 +53,9 @@
             {% csrf_token %}
             <div class="input-group">
                 <input type="text" name="username" placeholder="Username" required>
-                <i class="fas fa-user"></i>
             </div>
             <div class="input-group">
                 <input type="password" name="password" placeholder="Password" required>
-                <i class="fas fa-lock"></i>
             </div>
             <button type="submit">Login</button>
         </form>

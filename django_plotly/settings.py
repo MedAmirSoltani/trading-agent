@@ -22,7 +22,7 @@ SECRET_KEY = 'django-insecure-sy88^q+h@51er2t+ypcw7r!6w1+u!2ztep^h0q1hzg**c*j677
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['10.0.2.2', '127.0.0.1', '192.168.1.101']
 
 
 # Application definition
@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'core',
+    'pwa',
+
 ]
 
 MIDDLEWARE = [
@@ -52,6 +54,38 @@ ROOT_URLCONF = 'django_plotly.urls'
 
 # settings.py
 
+PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'static', 'serviceworker.js')
+
+PWA_APP_NAME = 'My Django App'
+PWA_APP_DESCRIPTION = "My Django Application"
+PWA_APP_THEME_COLOR = '#0A0302'
+PWA_APP_BACKGROUND_COLOR = '#ffffff'
+PWA_APP_DISPLAY = 'standalone'
+PWA_APP_SCOPE = '/'
+PWA_APP_ORIENTATION = 'any'
+PWA_APP_START_URL = '/'
+PWA_APP_STATUS_BAR_COLOR = 'default'
+PWA_APP_ICONS = [
+    {
+        'src': '/static/images/myicon.png',
+        'sizes': '160x160'
+    }
+]
+PWA_APP_ICONS_APPLE = [
+    {
+        'src': '/static/images/myappleicon.png',
+        'sizes': '160x160'
+    }
+]
+PWA_APP_SPLASH_SCREEN = [
+    {
+        'src': '/static/images/mysplashscreen.png',
+        'sizes': '640x1136',
+        'type': 'image/png'
+    }
+]
+PWA_APP_DIR = 'ltr'
+PWA_APP_LANG = 'en-US'
 
 TEMPLATES = [
     {

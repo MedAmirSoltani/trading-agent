@@ -184,7 +184,7 @@
             padding: 0;
             background-color: #f8f9fa;
         }
-        .container {
+        .container_add {
             max-width: 600px;
             margin: 50px auto;
 
@@ -231,7 +231,7 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container_add">
         <h1>Add from CSV</h1>
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
@@ -242,18 +242,8 @@
     </div>
 </body>
 </html>
-<br><br><br><br><br><br><br><br>
-
-
-
-
-  <!-- footer section -->
-  <section class="container-fluid footer_section">
-    <p>
-      &copy; 2024 All Rights Reserved By Value
-    </p>
-  </section>
-  <!-- footer section -->
+<br>
+{% include "footer.html" %}
 
   <script type="text/javascript" src="  {% static 'js/jquery-3.4.1.min.js' %}
   "></script>

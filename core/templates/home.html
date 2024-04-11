@@ -201,7 +201,7 @@
                           The Future of Trading.
                         </h2>
                         
-                        <div style="margin-left: 120px;" class="">
+                        <div class="">
                           {% if user.is_authenticated %}
                           <a href="{% url 'how' %}"> <i class="fas fa-play-circle"></i> Get Started</a>
                           {% else %}
@@ -434,13 +434,9 @@
 
  
 
-  <!-- footer section -->
-  <section class="container-fluid footer_section">
-    <p>
-      &copy; 2024 All Rights Reserved By Value
-    </p>
-  </section>
-  <!-- footer section -->
+  <br>
+  {% include "footer.html" %}
+  
 
   <script type="text/javascript" src="  {% static 'js/jquery-3.4.1.min.js' %}
   "></script>

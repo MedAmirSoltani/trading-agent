@@ -181,7 +181,7 @@
             padding: 0;
             background-color: #f8f9fa;
         }
-        .container {
+        .container_add {
             max-width: 800px;
             margin: 50px auto;
             padding: 20px;
@@ -242,7 +242,7 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container_add">
         <h1>{{ topic.topic }}</h1>
         <p>Published by: {{ topic.user.username }}</p>
         <p>Published at: {{ topic.created_at }}</p>
@@ -272,16 +272,8 @@
 
 
 
-
-
-  <!-- footer section -->
-  <section class="container-fluid footer_section">
-    <p>
-      &copy; 2024 All Rights Reserved By Value
-    </p>
-  </section>
-  <!-- footer section -->
-
+<br>
+{% include "footer.html" %}
   <script type="text/javascript" src="  {% static 'js/jquery-3.4.1.min.js' %}
   "></script>
   <script type="text/javascript" src="  {% static 'js/bootstrap.js' %}

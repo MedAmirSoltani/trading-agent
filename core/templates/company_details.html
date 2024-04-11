@@ -203,7 +203,7 @@
             margin: 0;
             padding: 0;
         }
-        .container {
+        .container_add {
             max-width: 800px;
             margin: 20px auto;
             padding: 20px;
@@ -266,7 +266,7 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container_add">
         <h1><i class="fas fa-chart-line icon"></i>{{ company_info.name }} Details</h1>
         <div id="plotly-chart"></div>
         <div class="data-info">
@@ -289,17 +289,9 @@
 </html>
 
 
+<br>
 
-
-
-
-  <!-- footer section -->
-  <section class="container-fluid footer_section">
-    <p>
-      &copy; 2024 All Rights Reserved By Value
-    </p>
-  </section>
-  <!-- footer section -->
+{% include "footer.html" %}
 
   <script type="text/javascript" src="  {% static 'js/jquery-3.4.1.min.js' %}
   "></script>
