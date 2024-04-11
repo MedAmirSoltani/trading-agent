@@ -200,12 +200,13 @@
                         <h2>
                           The Future of Trading.
                         </h2>
-                        <div class="">
+                        
+                        <div style="margin-left: 120px;" class="">
                           {% if user.is_authenticated %}
-                          <a href="{% url 'how' %}">Get Started</a>
+                          <a href="{% url 'how' %}"> <i class="fas fa-play-circle"></i> Get Started</a>
                           {% else %}
                           <a href="{% url 'login' %}">
-                            Get Started
+                            <i class="fas fa-play-circle"></i> Get Started
                           </a>
                           {% endif %}
                         </div>
@@ -214,8 +215,14 @@
                   </div>
                   <div class="col-md-5">
                     <div class="img-box">
-                      <img src="{% static 'images/slider-img.png' %}" alt="" />
+             <img  src="{% static 'images/Cyborg.gif' %}" alt="" />
 
+             <center>
+              <a href="{% url 'chat' %}" style="background-color: black; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block">
+                  <i class="fas fa-comments" style="margin-right: 5px;"></i>Chat with ArtSmart
+              </a>
+          </center>
+          
                     </div>
                   </div>
                 </div>
@@ -414,11 +421,11 @@
     <div class="btn-box">
       {% if user.is_authenticated %}
       <a href="{% url 'how' %}">
-        Read More
+        <i class="fas fa-arrow-right"></i> Read More
       </a>
       {% else %}
       <a href="{% url 'login' %}">
-        Read More
+        <i class="fas fa-arrow-right"></i> Read More
       </a>
       {% endif %}
     </div>

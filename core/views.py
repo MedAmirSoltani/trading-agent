@@ -767,3 +767,9 @@ def download_csv(request):
         writer.writerow(row)
 
     return response
+
+from django.shortcuts import render
+
+
+def chat_interface(request):
+    return render(request, 'chat.html')

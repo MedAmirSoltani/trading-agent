@@ -2,7 +2,7 @@
 
 from django.urls import path
 from django.contrib.auth.views import LogoutView
-from core.views import sector_details,company_details,download_csv,sentiment_analysis,topic_detail,add_topic,add_from_csv,forum,dashboard,portfolio_analysis,trading_strategies,market_insights,company_portfolio,home,about,how,register,user_login,profile,preferences,update_preferences,allcourses
+from core.views import chat_interface,sector_details,company_details,download_csv,sentiment_analysis,topic_detail,add_topic,add_from_csv,forum,dashboard,portfolio_analysis,trading_strategies,market_insights,company_portfolio,home,about,how,register,user_login,profile,preferences,update_preferences,allcourses
 urlpatterns = [
     
     path('home/', home, name='home'),
@@ -27,6 +27,7 @@ urlpatterns = [
     
     path('sector_details/<str:sector_name>/', sector_details, name='sector_details'),
     path('company_details/<str:company_name>/', company_details, name='company_details'),
+    path('chat/', chat_interface, name='chat'),
 
     path('', user_login, name='login'),
     path('company_portfolio/<str:company_name>/', company_portfolio, name='company_portfolio'),

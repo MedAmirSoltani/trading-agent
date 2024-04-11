@@ -192,11 +192,11 @@
           <div class="btn-box">
             {% if user.is_authenticated %}
             <a href="{% url 'how' %}">
-              Get Started
+              <i class="fas fa-play-circle"></i> Get Started
             </a>
             {% else %}
             <a href="{% url 'login' %}">
-              Get Started
+              <i class="fas fa-play-circle"></i> Get Started
             </a>
             {% endif %}
           </div>
