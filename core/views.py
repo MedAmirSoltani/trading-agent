@@ -568,7 +568,7 @@ def user_login(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('home')
+                return redirect('loading')
             else:
                 # Return an 'invalid login' error message
                 pass
@@ -773,3 +773,5 @@ from django.shortcuts import render
 
 def chat_interface(request):
     return render(request, 'chat.html')
+def loading(request):
+    return render(request, 'loading.html')
