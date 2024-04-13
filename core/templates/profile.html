@@ -92,7 +92,7 @@
   <meta name="description" content="" />
   <meta name="author" content="" />
 
-  <title>Value</title>
+  <title>InfiniTrade</title>
 
   <!-- slider stylesheet -->
   <!-- slider stylesheet -->
@@ -173,119 +173,134 @@
       </div>
     </header>
     <!-- end header section -->
-
     <!DOCTYPE html>
     <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>User Profile</title>
+        <title>User Profile | TradeSmart</title>
         <link rel="stylesheet" href="{% static 'css/profile.css' %}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     </head>
     <body>
-        <div class="container_add">
-            <div class="profile-card">
-                <center>
-                    <div class="logo">
-                        <img src="{% static 'images/logo.png' %}" alt="Value Logo">
-                    </div>
-                </center>
-                <h1 class="welcome-message">
-                    <span class="icon"><i class="fas fa-smile"></i></span>
-                    Welcome back, <span class="user-name">{{ form.instance.first_name }}</span>!
-                </h1>
-                
-                <form method="post">
+        <div class="profile-container">
+
+            <header class="profile-header">
+                <h1>Welcome back, <strong class="user-name">{{ form.instance.first_name }}</strong>!</h1>
+
+            </header>
+
+            <section class="user-info">
+                <form method="post" class="profile-form">
                     {% csrf_token %}
-                    <div class="form-group">
-                        <label for="username"><i class="fas fa-user"></i> Username:</label>
-                        <input type="text" id="username" name="username" value="{{ form.instance.username }}" readonly>
+                    <div class="form-row">
+                        <label for="username"><i class="fas fa-user-circle"></i> Username</label>
+                        <input type="text" id="username" name="username" value="{{ form.instance.username }}" readonly class="input-readonly">
                     </div>
-                    
-                    <div class="form-group">
-                        <label for="first_name"><i class="fas fa-signature"></i> First Name:</label>
+    
+                    <div class="form-row">
+                        <label for="first_name"><i class="fas fa-id-badge"></i> First Name</label>
                         {{ form.first_name }}
                     </div>
-                    <div class="form-group">
-                        <label for="last_name"><i class="fas fa-signature"></i> Last Name:</label>
+    
+                    <div class="form-row">
+                        <label for="last_name"><i class="fas fa-id-card-alt"></i> Last Name</label>
                         {{ form.last_name }}
                     </div>
-                    <div class="form-group">
-                        <label for="email"><i class="fas fa-envelope"></i> Email:</label>
+    
+                    <div class="form-row">
+                        <label for="email"><i class="fas fa-envelope-open-text"></i> Email</label>
                         {{ form.email }}
                     </div>
-                    <div class="form-group">
-                        <label for="birth_date"><i class="fas fa-birthday-cake"></i> Birth Date:</label>
-                        <input type="date" id="birth_date" name="birth_date" value="{{ form.instance.birth_date|date:'Y-m-d' }}">
+    
+                    <div class="form-row">
+                        <label for="birth_date"><i class="fas fa-calendar-alt"></i> Birth Date</label>
+                        <input type="date" id="birth_date" name="birth_date" value="{{ form.instance.birth_date|date:'Y-m-d' }}" class="input-date">
                     </div>
-                    
-                    <button type="submit" class="btn"><i class="fas fa-save"></i> Save Changes</button>
+
+                    <button type="submit" class="btn-save"><i class="fas fa-save"></i> Save Changes</button>
+                  <center ><img src="{% static 'images/infinitrade.png' %}" class="img-fluid" alt="logo" style="width: 50px;"> 
+                  </center>
                 </form>
-            </div>
+            </section>
         </div>
     </body>
     </html>
-<style>
-  .container_add {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #f4f4f4;
-}
-
-.profile-card {
-    width: 90%;
-    max-width: 500px;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin: 20px;
-}
-
-.welcome-message {
-    text-align: center;
-    color: #0540c0;
-    font-size: 1.5em;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-label {
-    font-weight: bold;
-    display: block;
-    color: #333;
-}
-
-input[type="text"], input[type="email"], input[type="date"] {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-button.btn {
-    width: 100%;
-    padding: 10px;
-    background-color: #0540c0;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button.btn:hover {
-    background-color: #062d64;
-}
-
-</style>    
-
-
-
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ecf0f1;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+    
+        .profile-container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+    
+        .profile-header {
+            text-align: center;
+            border-bottom: 2px solid #0056b3;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+    
+        .logo {
+            width: 120px;
+        }
+    
+        .user-info {
+            font-size: 1rem;
+        }
+    
+        .form-row {
+            margin-bottom: 20px;
+        }
+    
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+    
+        input[type="text"], input[type="email"], input[type="date"], .input-readonly {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    
+        .input-readonly {
+            background-color: #f7f7f7;
+        }
+    
+        .input-date {
+            cursor: pointer;
+        }
+    
+        .btn-save {
+            width: 100%;
+            padding: 10px;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+    
+        .btn-save:hover {
+            background-color: #0f73df;
+        }
+    </style>
+    
 
 
 

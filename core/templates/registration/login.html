@@ -147,6 +147,7 @@ if ('serviceWorker' in navigator) {
     </style>
 </head>
 <body>
+  
     <div class="login-container">
         <div class="logo">
             <img src="{% static 'images/logo.png' %}" alt="Value Logo">
@@ -163,10 +164,16 @@ if ('serviceWorker' in navigator) {
                 <input type="password" name="password" placeholder="Password" required>
             </div>
             <button type="submit">Login</button>
+            
         </form>
         <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
+        
         <p><a href="{% url 'home' %}">Continue as Guest</a></p>
+
+        
     </div>
+    
 </body>
+
 </html>
     

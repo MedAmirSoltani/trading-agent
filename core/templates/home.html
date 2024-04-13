@@ -14,7 +14,7 @@
   <meta name="description" content="" />
   <meta name="author" content="" />
 
-  <title>Value</title>
+  <title>InfiniTrade</title>
 
   <!-- slider stylesheet -->
   <!-- slider stylesheet -->
@@ -200,7 +200,7 @@
                         <h2>
                           The Future of Trading.
                         </h2>
-                        
+
                         <div class="">
                           {% if user.is_authenticated %}
                           <a href="{% url 'how' %}"> <i class="fas fa-play-circle"></i> Get Started</a>
@@ -221,6 +221,8 @@
               <a href="{% url 'chat' %}" style="background-color: black; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block">
                   <i class="fas fa-comments" style="margin-right: 5px;"></i>Chat with ArtSmart
               </a>
+              <br>
+
           </center>
           
                     </div>
@@ -244,7 +246,9 @@
   <div class="container">
       <div class="heading_container">
           <h2 style="color: #0056b3">Real Time Stock Market Data</h2>
+
       </div>
+
       <div id="plotly-plot">
         <!-- Plotly plot will be inserted here -->
         {{ plot_div|safe }}

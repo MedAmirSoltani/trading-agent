@@ -87,7 +87,7 @@
   <meta name="description" content="" />
   <meta name="author" content="" />
 
-  <title>Value</title>
+  <title>InfiniTrade</title>
 
   <!-- slider stylesheet -->
   <!-- slider stylesheet -->
@@ -189,7 +189,10 @@
         <div class="detail-box">
           <p>
             Start trading now with our cutting-edge intelligent trading platform. Gain access to advanced analytics, real-time market data, and powerful trading tools to make informed investment decisions. Whether you're a seasoned investor or new to trading, our platform offers a seamless and intuitive experience for managing your portfolio and maximizing returns. Join thousands of satisfied users and take control of your financial future today!          </p>
-          <div class="btn-box">
+            <img src="{% static 'images/infinitrade.png' %}" class="img-fluid" alt="logo" style="width: 50px;"> </a>                
+
+            <div class="btn-box">
+
             {% if user.is_authenticated %}
             <a href="{% url 'how' %}">
               <i class="fas fa-play-circle"></i> Get Started
@@ -200,6 +203,7 @@
             </a>
             {% endif %}
           </div>
+
         </div>
       </div>
     </div>
