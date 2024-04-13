@@ -34,6 +34,10 @@ if ('serviceWorker' in navigator) {
 }
 
 </script>
+
+
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,19 +46,120 @@ if ('serviceWorker' in navigator) {
     <title>Login - Intelligent Trading Bot</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+        body {
+            background: linear-gradient(135deg, #062E85, #2aabd2);
+            color: #fff;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 360px;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .login-container:hover {
+            transform: scale(1.03);
+        }
+
+        .logo img {
+            height: 60px;
+        }
+
+        .logo h2 {
+            color: #0056b3;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-group i {
+            position: absolute;
+            top: 13px;
+            left: 15px;
+            color: #0056b3;
+            transition: color 0.3s;
+        }
+
+        .input-group:hover i {
+            color: #062E85;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 12px 12px 40px;
+            border: 2px solid #dce4ec;
+            border-radius: 20px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            border-color: #062E85;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            background-color: #0056b3;
+            color: #fff;
+            padding: 12px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #062E85;
+        }
+
+        p {
+            font-size: 14px;
+        }
+
+        a {
+            color: #0056b3;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
     <div class="login-container">
         <div class="logo">
             <img src="{% static 'images/logo.png' %}" alt="Value Logo">
-            <h2>Intelligent Trading Bot</h2>
+            <h2>Intelligent Trading Agent</h2>
         </div>
         <form method="post">
             {% csrf_token %}
             <div class="input-group">
+                <i class="fa fa-user"></i>
                 <input type="text" name="username" placeholder="Username" required>
             </div>
             <div class="input-group">
+                <i class="fa fa-lock"></i>
                 <input type="password" name="password" placeholder="Password" required>
             </div>
             <button type="submit">Login</button>
@@ -64,102 +169,4 @@ if ('serviceWorker' in navigator) {
     </div>
 </body>
 </html>
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-    .logo img {
-    margin-bottom: -60px; /* Add margin to the bottom */
-    margin-top: -40px; /* Add margin to the bottom */
-
-}
-
-body {
-    background-color: #f7f7f7;
-    color: #333;
-    font-family: 'Roboto', sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-.login-container {
-    width: 100%;
-    max-width: 400px;
-    padding: 20px;
-    text-align: center;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-}
-
-.logo {
-    margin-bottom: 20px;
-}
-
-.logo i {
-    color: #ff5722;
-}
-
-.logo h2 {
-    color: #ff5722;
-    font-size: 24px;
-    margin-top: 10px;
-    margin-bottom: 0;
-}
-
-h2 {
-    margin-top: 20px;
-}
-
-.input-group {
-    position: relative;
-    margin-bottom: 20px;
-}
-
-input {
-    width: calc(100% - 40px);
-    padding: 10px;
-    padding-left: 40px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.input-group i {
-    position: absolute;
-    top: 50%;
-    left: 10px;
-    transform: translateY(-50%);
-    color: #ccc;
-}
-
-button {
-    background-color: #ff5722;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #ff7043;
-}
-
-p {
-    font-size: 14px;
-}
-
-a {
-    color: #ff5722;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-</style>
+    

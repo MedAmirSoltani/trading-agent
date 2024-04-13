@@ -6,43 +6,144 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Registration - Intelligent Trading Bot</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+    
+        body {
+            background: linear-gradient(135deg, #062E85, #2aabd2);
+            color: #fff;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+    
+        .login-container {
+            width: 100%;
+            max-width: 360px;
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+    
+        .login-container:hover {
+            transform: scale(1.03);
+        }
+    
+        .logo img {
+            height: 60px;
+        }
+    
+        .logo h2 {
+            color: #0056b3;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+    
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+    
+        .input-group i {
+            position: absolute;
+            top: 12px;
+            left: 15px;
+            color: #0056b3;
+            transition: color 0.3s;
+        }
+    
+        .input-group:hover i {
+            color: #062E85;
+        }
+    
+        input {
+            width: 100%;
+            padding: 12px 12px 12px 40px;
+            border: 2px solid #dce4ec;
+            border-radius: 20px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            box-sizing: border-box; /* Make sure that padding and border are included in the width */
+        }
+    
+        input:focus {
+            border-color: #062E85;
+            outline: none;
+        }
+    
+        button {
+            width: 100%;
+            background-color: #0056b3;
+            color: #fff;
+            padding: 12px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+    
+        button:hover {
+            background-color: #062E85;
+        }
+    
+        p {
+            font-size: 14px;
+        }
+    
+        a {
+            color: #0056b3;
+            text-decoration: none;
+        }
+    
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    
 </head>
 <body>
     <div class="login-container">
         <div class="logo">
-            <img src="{% static 'images/logo.png' %}" alt="Value Logo">
-            <h2>Intelligent Trading Bot</h2>
+            <img src="{% static 'images/logo.png' %}" alt="Company Logo">
+            <h2>Intelligent Trading Agent</h2>
         </div>
         <form method="post">
             {% csrf_token %}
             <div class="input-group">
-                <input type="text" name="username" placeholder="Username" required>
                 <i class="fas fa-user"></i>
+                <input type="text" name="username" placeholder="Username" required>
             </div>
             <div class="input-group">
-                <input type="text" name="first_name" placeholder="First Name" required>
                 <i class="fas fa-address-card"></i>
+                <input type="text" name="first_name" placeholder="First Name" required>
             </div>
             <div class="input-group">
-                <input type="text" name="last_name" placeholder="Last Name" required>
                 <i class="fas fa-id-card"></i>
+                <input type="text" name="last_name" placeholder="Last Name" required>
             </div>
             <div class="input-group">
-                <input type="email" name="email" placeholder="Email" required>
                 <i class="fas fa-envelope"></i>
+                <input type="email" name="email" placeholder="Email" required>
             </div>
             <div class="input-group">
-                <input type="date" name="birth_date" placeholder="Birth Date" required>
                 <i class="fas fa-calendar-alt"></i>
+                <input type="date" name="birth_date" placeholder="Birth Date" required>
             </div>
             <div class="input-group">
+                <i class="fas fa-lock"></i>
                 <input type="password" name="password1" placeholder="Password" required>
-                <i class="fas fa-lock"></i>
             </div>
             <div class="input-group">
-                <input type="password" name="password2" placeholder="Confirm Password" required>
                 <i class="fas fa-lock"></i>
+                <input type="password" name="password2" placeholder="Confirm Password" required>
             </div>
             <button type="submit">Register</button>
         </form>
@@ -50,105 +151,3 @@
     </div>
 </body>
 </html>
-
-
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
-body {
-    background-color: #f7f7f7;
-    color: #333;
-    font-family: 'Roboto', sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-.login-container {
-    width: 100%;
-    max-width: 400px;
-    padding: 20px;
-    text-align: center;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-}
-
-.logo {
-    margin-bottom: 20px;
-}
-
-.logo img {
-    margin-bottom: -60px; /* Add margin to the bottom */
-    margin-top: -40px; /* Add margin to the bottom */
-
-}
-
-.logo i {
-    color: #ff5722;
-}
-
-.logo h2 {
-    color: #ff5722;
-    font-size: 24px;
-    margin-top: 10px;
-    margin-bottom: 0;
-}
-
-h2 {
-    margin-top: 20px;
-}
-
-.input-group {
-    position: relative;
-    margin-bottom: 20px;
-}
-
-input {
-    width: calc(100% - 40px);
-    padding: 10px;
-    padding-left: 40px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.input-group i {
-    position: absolute;
-    top: 50%;
-    left: 10px;
-    transform: translateY(-50%);
-    color: #ccc;
-}
-
-button {
-    background-color: #ff5722;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #ff7043;
-}
-
-p {
-    font-size: 14px;
-}
-
-a {
-    color: #ff5722;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-</style>

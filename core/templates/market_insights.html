@@ -55,7 +55,7 @@
   }
   /* CSS for login button */
   .login-btn {
-    background-color: #ff5722; /* Background color of the button */
+    background-color: #0056b3; /* Background color of the button */
     color: #fff; /* Text color of the button */
     border: none;
     border-radius: 5px;
@@ -66,7 +66,7 @@
   }
   
   .login-btn:hover {
-    background-color: #ff7043; /* Darker background color on hover */
+    background-color: #0056b3; /* Darker background color on hover */
   }
   
   .login-btn:focus {
@@ -352,14 +352,15 @@
         }
         /* Style for sector detail buttons */
 .sector-buttons {
-  margin-bottom: 20px; /* Adjust margin as needed */
+  margin-bottom: 20px;
+   /* Adjust margin as needed */
 }
 
 .sector-button {
   display: inline-block;
   padding: 10px 20px;
   margin-right: 10px;
-  background-color: #3498db; /* Change to your preferred background color */
+  background-color: #0056b3; /* Change to your preferred background color */
   color: #fff; /* Text color */
   text-decoration: none;
   border-radius: 5px;
@@ -367,7 +368,7 @@
 }
 
 .sector-button:hover {
-  background-color: #2980b9; /* Darker shade on hover */
+  background-color: rgb(10, 63, 98); /* Darker shade on hover */
 }
 
 
@@ -393,7 +394,7 @@
     </head>
     <body>
         <div class="container_add">
-            <h1>Market Insights <i class="fas fa-chart-line"></i></h1>
+            <h1 style="color :#0056b3">Market Insights <i class="fas fa-chart-line"></i></h1>
 
 
 
@@ -404,7 +405,7 @@
 
             <!-- Table to display companies -->
          
-        <h2>Performance <i class="fas fa-tachometer-alt"></i></h2>
+        <h2 style="color :#0056b3">Performance <i class="fas fa-tachometer-alt"></i></h2>
 
 
 
@@ -416,7 +417,7 @@
         <center>
           <!-- Sector detail buttons with icons -->
           <div class="sector-buttons">
-            <a class="sector-button" href="{% url 'sector_details' 'bank' %}">
+            <a class="sector-button"  href="{% url 'sector_details' 'bank' %}">
               <i class="fas fa-building"></i> Bank
             </a>
             <a class="sector-button" href="{% url 'sector_details' 'assurance' %}">
@@ -479,14 +480,13 @@
     
             <!-- Sentiment analysis section -->
             <div class="sentiment">
-                <h2>News Sentiment Analysis <i class="far fa-newspaper"></i></h2>
+                <h2 style="color :#0056b3">News Sentiment Analysis <i class="far fa-newspaper"></i></h2>
                 <p><i class="far fa-thumbs-up positive"></i> Positive Sentiment: {{ news_sentiment.Positive }}</p>
                 <p><i class="far fa-meh-blank neutral"></i> Neutral Sentiment: {{ news_sentiment.Neutral }}</p>
                 <p><i class="far fa-thumbs-down negative"></i> Negative Sentiment: {{ news_sentiment.Negative }}</p>
                 <div class="forum-actions">
-                  <a href="{% url 'sentiment_analysis' %}" style="background-color: #dc3545;"><i class="fas fa-chart-line"></i> Sentiment Analysis</a>
+                  <a href="{% url 'sentiment_analysis' %}" style="background-color: #0056b3;"><i class="fas fa-chart-line"></i> Sentiment Analysis</a>
               </div>
-              
             </div>
         </div>
     

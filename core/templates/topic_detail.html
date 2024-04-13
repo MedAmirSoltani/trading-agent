@@ -53,7 +53,7 @@
   }
   /* CSS for login button */
   .login-btn {
-    background-color: #ff5722; /* Background color of the button */
+    background-color: #0056b3; /* Background color of the button */
     color: #fff; /* Text color of the button */
     border: none;
     border-radius: 5px;
@@ -64,7 +64,7 @@
   }
   
   .login-btn:hover {
-    background-color: #ff7043; /* Darker background color on hover */
+    background-color: #0056b3; /* Darker background color on hover */
   }
   
   .login-btn:focus {
@@ -243,7 +243,7 @@
 </head>
 <body>
     <div class="container_add">
-        <h1>{{ topic.topic }}</h1>
+        <h1 style="color:#0056b3">{{ topic.topic }}</h1>
         <p>Published by: {{ topic.user.username }}</p>
         <p>Published at: {{ topic.created_at }}</p>
         <ul class="comments-list">
@@ -259,11 +259,11 @@
             {% endfor %}
         </ul>
         
-        <h3>Add Comment</h3>
+        <h3 style="color:#0056b3">Add Comment</h3>
         <form method="post">
             {% csrf_token %}
             <input type="text" name="comment" placeholder="Enter your comment...">
-            <button type="submit"><i class="fas fa-plus"></i> Add Comment</button>
+            <button style="background-color:#0056b3" type="submit"><i class="fas fa-plus"></i> Add Comment</button>
         </form>
     </div>
 </body>

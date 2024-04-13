@@ -2,7 +2,7 @@
 from django.urls import path, include  # make sure include is imported
 from django.urls import path
 from django.contrib.auth.views import LogoutView
-from core.views import manifest,loading,chat_interface,sector_details,company_details,download_csv,sentiment_analysis,topic_detail,add_topic,add_from_csv,forum,dashboard,portfolio_analysis,trading_strategies,market_insights,company_portfolio,home,about,how,register,user_login,profile,preferences,update_preferences,allcourses
+from core.views import loading,chat_interface,sector_details,company_details,download_csv,sentiment_analysis,topic_detail,add_topic,add_from_csv,forum,dashboard,portfolio_analysis,trading_strategies,market_insights,company_portfolio,home,about,how,register,user_login,profile,preferences,update_preferences,allcourses
 urlpatterns = [
     path('', include('pwa.urls')),  # Add this line
 

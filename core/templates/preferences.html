@@ -20,7 +20,7 @@
 h1 {
   text-align: center;
   margin-bottom: 20px;
-  color: #FFA500;
+  color: #0056b3;
 }
 
 .form-group {
@@ -46,7 +46,7 @@ button.btn {
   display: block;
   width: 100%;
   padding: 10px;
-  background-color: #FFA500;
+  background-color: #0056b3;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -55,7 +55,7 @@ button.btn {
 
 button.btn:hover {
 
-  background-color: #ff5722;
+  background-color: #031741;
 }
 
 </style>
@@ -111,7 +111,7 @@ button.btn:hover {
 }
 /* CSS for login button */
 .login-btn {
-  background-color: #ff5722; /* Background color of the button */
+  background-color: #0056b3; /* Background color of the button */
   color: #fff; /* Text color of the button */
   border: none;
   border-radius: 5px;
@@ -122,18 +122,17 @@ button.btn:hover {
 }
 
 .login-btn:hover {
-  background-color: #ff7043; /* Darker background color on hover */
+  background-color: #0056b3; /* Darker background color on hover */
 }
 
 .login-btn:focus {
   outline: none; /* Remove the default focus outline */
 }
 .logo img {
-  margin-bottom: -50px; /* Add margin to the bottom */
-  margin-top: -60px; /* Add margin to the bottom */
+    height: 60px;
+
 
 }
-
 </style>
 
      <!-- Link to Font Awesome CSS -->
@@ -262,7 +261,9 @@ button.btn:hover {
                 <img src="{% static 'images/logo.png' %}" alt="Value Logo">
     
             </div></center>
-        <h1><i class="fas fa-cogs"></i> Set Your Preferences</h1>
+        <h1 style="    text-align: center;
+        color: #0540c0;
+        font-size: 1.5em;" ><i class="fas fa-cogs"></i> Set Your Preferences</h1>
         <form method="post">
             {% csrf_token %}
             <div class="form-group">
@@ -320,7 +321,7 @@ button.btn:hover {
                 <label for="available_funds"><i class="fas fa-money-bill"></i> Available Funds ($):</label>
                 <input type="number" name="available_funds" id="available_funds" step="0.01">
             </div>
-            <button type="submit"><i class="fas fa-save"></i> Save Preferences</button>
+            <button style="background-color:#0056b3" type="submit"><i class="fas fa-save"></i> Save Preferences</button>
         </form>
     </div>
 </body>

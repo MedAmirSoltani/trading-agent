@@ -55,7 +55,7 @@
   }
   /* CSS for login button */
   .login-btn {
-    background-color: #ff5722; /* Background color of the button */
+    background-color: #0056b3; /* Background color of the button */
     color: #fff; /* Text color of the button */
     border: none;
     border-radius: 5px;
@@ -66,7 +66,7 @@
   }
   
   .login-btn:hover {
-    background-color: #ff7043; /* Darker background color on hover */
+    background-color: #0056b3; /* Darker background color on hover */
   }
   
   .login-btn:focus {
@@ -257,10 +257,10 @@
 </head>
 <body>
     <div class="container_add">
-        <h1><i class="fas fa-chart-line icon"></i>{{ sector_info.name }} Details</h1>
+        <h1 style="color:#0056b3"><i class="fas fa-chart-line icon"></i>{{ sector_info.name }} Details</h1>
         <div id="plotly-chart"></div>
         <div class="data-info">
-            <h2>Data Information</h2>
+            <h2 style="color:#0056b3">Data Information</h2>
             <p><i class="fas fa-dollar-sign icon"></i><span class="label">Average Price:</span> <span class="value">{{ sector_info.average_price }}</span></p>
             <p><i class="fas fa-chart-line icon"></i><span class="label">Highest Price:</span> <span class="value">{{ sector_info.highest_price }}</span></p>
             <p><i class="fas fa-chart-line icon"></i><span class="label">Lowest Price:</span> <span class="value">{{ sector_info.lowest_price }}</span></p>

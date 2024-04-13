@@ -778,20 +778,3 @@ def loading(request):
 
 
 
-from django.http import JsonResponse
-
-def manifest(request):
-    return JsonResponse({
-        "name": "InfiniTrade",
-        "short_name": "InfiniTrade",
-        "start_url": "/",
-        "display": "standalone",
-        "background_color": "#000000",
-        "theme_color": "#0A0A0A",
-        "icons": [{
-            "src": request.build_absolute_uri('/static/images/infinitrade.png'),
-            "sizes": "192x192",
-            "type": "image/png"
-        }]
-    })
-
