@@ -252,18 +252,69 @@ button.btn:hover {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Preferences</title>
-    <link rel="stylesheet" href="{% static 'css/pref.css' %}">
-</head>
+
+
+
+  </head>
+
+
+
+  <style>
+    /* Adding some custom styles */
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #e6f0ff;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+      max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+        color: #0056b3;
+        font-size: 24px;
+    }
+    label {
+      display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #0056b3;
+    }
+    select, input {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+   .our button {
+        background-color: #0056b3;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        display: block;
+        width: 100%;
+    }
+
+    .logo img {
+        max-width: 100px;
+    }
+</style>
 <body>
-    <div class="container">
-         <center>
-            <div class="logo">
-                <img src="{% static 'images/logo.png' %}" alt="Value Logo">
-    
-            </div></center>
-        <h1 style="    text-align: center;
-        color: #0540c0;
-        font-size: 1.5em;" ><i class="fas fa-cogs"></i> Set Your Preferences</h1>
+  <div class="container">
+          <div class="logo">
+              <img src="{% static 'images/logo.png' %}" alt="Value Logo">
+          </div>
+          <center>
+          <h1><i class="fas fa-cogs"></i> Set Your Preferences</h1></center>
         <form method="post">
             {% csrf_token %}
             <div class="form-group">
@@ -321,7 +372,10 @@ button.btn:hover {
                 <label for="available_funds"><i class="fas fa-money-bill"></i> Available Funds ($):</label>
                 <input type="number" name="available_funds" id="available_funds" step="0.01">
             </div>
+            <div class="our">
+
             <button style="background-color:#0056b3" type="submit"><i class="fas fa-save"></i> Save Preferences</button>
+            </div>
             <center ><img src="{% static 'images/infinitrade.png' %}" class="img-fluid" alt="logo" style="width: 50px;"> 
             </center>
           </form>

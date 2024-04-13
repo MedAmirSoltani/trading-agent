@@ -49,7 +49,7 @@ def home(request):
 
     # Define layout with rangeslider
     layout = go.Layout(
-        title='Real-Time World Stock Price Plot with Forecast',
+        title='Real-Time World Stock Price ',
         xaxis=dict(title='Time', rangeslider=dict(visible=True)),  # Add rangeslider
         yaxis=dict(title='Price')
     )
@@ -113,7 +113,7 @@ def dashboard(request):
 
     # Define layout for the main plot
     layout = go.Layout(
-        title='Tunindex Price Chart with Forecast',
+        title='Tunindex Price Chart',
         xaxis=dict(title='Date', tickformat='%d-%m-%Y'),
         yaxis=dict(title='Price', tickformat=',.0f'),
         hovermode='closest',
@@ -183,7 +183,7 @@ def market_insights(request):
                                 showlegend=True)
 
     # Define layout for the main plot
-    layout = go.Layout(title='Stock Market Price Chart with Forecast',
+    layout = go.Layout(title='Stock Market Price Chart',
                        xaxis=dict(title='Date', tickformat='%d-%m-%Y'),
                        yaxis=dict(title='Price', tickformat=',.0f'),
                        hovermode='closest',
@@ -273,7 +273,7 @@ def company_details(request, company_name):
                                 showlegend=True)
 
     # Define layout for the main plot
-    layout = go.Layout(title=f'Stock Market Price Chart for {company_name} with Forecast',
+    layout = go.Layout(title=f'Stock Market Price Chart for {company_name} ',
                        xaxis=dict(title='Date', tickformat='%d-%m-%Y'),
                        yaxis=dict(title='Price', tickformat=',.0f'),
                        hovermode='closest',
@@ -345,7 +345,7 @@ def sector_details(request, sector_name):
                                 showlegend=True)
 
     # Define layout for the main plot
-    layout = go.Layout(title=f'Stock Market Price Chart for {sector_name} with Forecast',
+    layout = go.Layout(title=f'Stock Market Price Chart for {sector_name} ',
                        xaxis=dict(title='Date', tickformat='%d-%m-%Y'),
                        yaxis=dict(title='Price', tickformat=',.0f'),
                        hovermode='closest',

@@ -184,7 +184,9 @@
     </head>
     <body>
         <div class="profile-container">
-
+          <div class="logo">
+            <img src="{% static 'images/logo.png' %}" alt="Value Logo">
+        </div>
             <header class="profile-header">
                 <h1>Welcome back, <strong class="user-name">{{ form.instance.first_name }}</strong>!</h1>
 
@@ -228,14 +230,19 @@
     </html>
     
     <style>
+        .logo img {
+    height: 60px;
+
+
+}
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #ecf0f1;
+            background-color: #e6f0ff;
             color: #333;
             margin: 0;
             padding: 0;
         }
-    
+
         .profile-container {
             max-width: 600px;
             margin: 40px auto;
@@ -268,6 +275,8 @@
             display: block;
             font-weight: bold;
             margin-bottom: 5px;
+            color: #0056b3;
+
         }
     
         input[type="text"], input[type="email"], input[type="date"], .input-readonly {
