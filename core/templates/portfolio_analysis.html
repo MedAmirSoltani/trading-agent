@@ -175,85 +175,206 @@
 
 
 
-<br><br>
-
-
-
-
-
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio Analysis</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
+    <title>Tunisian Stock Market Portfolio</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f8f9fa;
-            color: #343a40;
+            background-color: #f0f2f5;
+            color: #333;
         }
-        .container_add {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
+        .container1 {
+            max-width: 1000px;
+            margin: 30px auto;
             background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
             border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
         }
-        h1 {
-            color: #343a40;
-            margin-top: 0;
-            text-align: center;
-            font-size: 36px;
+        .title {
+            color: #0056b3;
+                margin-top: 0;
+                text-align: center;
+                font-size: 36px;}
+  
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+            padding: 20px;
         }
-        h2 {
-            color: #343a40;
-            margin-top: 30px;
-            margin-bottom: 15px;
+        .grid-item {
+            background: #e6f0fa;
+            border-left: 5px solid #0073e6;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .grid-item:hover {
+            transform: translateY(-5px);
+        }
+        .icon {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: #0073e6;
             font-size: 24px;
         }
-
+        .investment-amount, .performance {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .performance {
+            color: #28a745;
+        }
+        .reason-to-buy {
+            color: #0056b3;
+            font-weight: bold;
+            margin-top: 10px;
+        }
         .metrics {
-            margin-top: 20px;
+            background: #0056b3;
+            color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
         }
-        .benchmark {
-            margin-top: 20px;
+        .metric-item {
+            text-align: center;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
         }
+        .metric-item:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        .metric-value {
+            font-weight: bold;
+            font-size: 22px;
+            margin-top: 8px;
+        }
+        .button, a.button {
+    background-color: #f01919; /* Default red background */
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    text-decoration: none; /* Remove underline from links */
+    display: inline-block; /* Keep the button block-like */
+    text-align: center; /* Center text and icons */
+}
+
+.button.add-new {
+    background-color: #0d8004; /* Green background for add new */
+}
+
+.button:hover {
+    background-color: #740505; /* Darker red on hover */
+}
+
+.button.add-new:hover {
+    background-color: #085503; /* Darker green on hover for add new */
+}
+
+.button-container {
+    text-align: center;
+    margin-top: 30px;
+}
+     
     </style>
 </head>
 <body>
-    <div class="container_add">
-        <h1 style="color:#0056b3"><i class="fas fa-chart-line"></i> Portfolio Analysis</h1>
+    <div class="container1">
+        <h1 class="title"><i class="fas fa-chart-line"></i> Tunisian Stock Market Portfolio</h1>
+        <br>
+        <div class="grid">
+            <div class="grid-item">
+                <i class="fas fa-bank icon"></i>
+                <h3>Biat</h3>
+                <p>Allocation: 30%</p>
+                <p class="investment-amount">45,000 TND</p>
+                <p class="performance">+5% YTD</p>
+                <p class="reason-to-buy">Strong growth in Banking segment</p>
+            </div>
+            <div class="grid-item">
+                <i class="fas fa-solar-panel icon"></i>
+                <h3>Tunis Energy</h3>
+                <p>Allocation: 20%</p>
+                <p class="investment-amount">30,000 TND</p>
+                <p class="performance">+10% YTD</p>
+                <p class="reason-to-buy">Leader in renewable energy</p>
+            </div>
+            <div class="grid-item">
+                <i class="fas fa-chart-pie icon"></i>
+                <h3>Tunis Finance</h3>
+                <p>Allocation: 25%</p>
+                <p class="investment-amount">37,500 TND</p>
+                <p class="performance">+3% YTD</p>
+                <p class="reason-to-buy">Innovative fintech solutions</p>
+            </div>
+            <div class="grid-item">
+                <i class="fas fa-building icon"></i>
+                <h3>Tunis Properties</h3>
+                <p>Allocation: 15%</p>
+                <p class="investment-amount">22,500 TND</p>
+                <p class="performance">+8% YTD</p>
+                <p class="reason-to-buy">Expanding real estate market</p>
+            </div>
+            <div class="grid-item">
+                <i class="fas fa-globe icon"></i>
+                <h3>Other</h3>
+                <p>Allocation: 10%</p>
+                <p class="investment-amount">15,000 TND</p>
+                <p class="performance">+2% YTD</p>
+                <p class="reason-to-buy">Diversification benefits</p>
+            </div>
+        </div>
         <div class="metrics">
-            <h2 style="color:#0056b3">Portfolio Metrics</h2>
-            <ul>
-                {% for key, value in portfolio_metrics.items %}
-                    <li>{{ key }}: {{ value }}</li>
-                {% endfor %}
-            </ul>
+            <div class="metric-item">
+                <strong>Sharpe Ratio</strong>
+                <span class="metric-value">1.3</span>
+            </div>
+            <div class="metric-item">
+                <strong>Total Return</strong>
+                <span class="metric-value">+7%</span>
+            </div>
+            <div class="metric-item">
+                <strong>Volatility</strong>
+                <span class="metric-value">5%</span>
+            </div>
         </div>
-        <div class="benchmark">
-            <h2 style="color:#0056b3">Benchmark Performance</h2>
-            <ul>
-                {% for key, value in benchmark_performance.items %}
-                    <li>{{ key }}: {{ value }}</li>
-                {% endfor %}
-            </ul>
+        <div class="button-container">
+          <div class="button-container">
+            
+            <a class="button" href="{% url 'update_preferences' %}">
+                <i class="fas fa-cog"></i> Change Preferences
+            </a>
         </div>
+        <br>
+        <center> <img src="{% static 'images/infinitrade.png' %}" class="img-fluid" alt="logo" style="width: 50px;">  </center>                
+
+        </div>
+        
     </div>
 </body>
 </html>
-
-
-
 
 
 <br>

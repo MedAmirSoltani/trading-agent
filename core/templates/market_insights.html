@@ -478,19 +478,9 @@
  </script>
 
     
-            <!-- Sentiment analysis section -->
-            <div class="sentiment">
-                <h2 style="color :#0056b3">News Sentiment Analysis <i class="far fa-newspaper"></i></h2>
-                <p><i class="far fa-thumbs-up positive"></i> Positive Sentiment: {{ news_sentiment.Positive }}</p>
-                <p><i class="far fa-meh-blank neutral"></i> Neutral Sentiment: {{ news_sentiment.Neutral }}</p>
-                <p><i class="far fa-thumbs-down negative"></i> Negative Sentiment: {{ news_sentiment.Negative }}</p>
-                <div class="forum-actions">
-                  <a href="{% url 'sentiment_analysis' %}" style="background-color: #0056b3;"><i class="fas fa-chart-line"></i> Sentiment Analysis</a>
+  
+            <center> <img src="{% static 'images/infinitrade.png' %}" class="img-fluid" alt="logo" style="width: 50px;">  </center>                
 
-                </div>
-                <center> <img src="{% static 'images/infinitrade.png' %}" class="img-fluid" alt="logo" style="width: 50px;">  </center>                
-
-            </div>
         </div>
     
         <!-- JavaScript to render Plotly chart -->

@@ -227,28 +227,158 @@
                 margin-top: 30px;
                 text-align: center;
             }
+            .sentiment {
+                margin-top: 30px;
+                text-align: center;
+            }
+    
+            .sentiment h2 {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+    
+            .sentiment p {
+                font-size: 18px;
+                margin-bottom: 10px;
+            }
+    
+            .positive {
+                color: #28a745;
+            }
+    
+            .neutral {
+                color: #6c757d;
+            }
+    
+            .negative {
+                color: #dc3545;
+            }
+            .forum-actions {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .forum-actions a {
+            text-decoration: none;
+            color: #fff;
+            background-color: #2fa84a;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin: 0 10px;
+            transition: background-color 0.3s ease;
+        }
+        .forum-actions a:hover {
+            background-color: #66d07d;
+        }
+        /* Style for sector detail buttons */
+.sector-buttons {
+  margin-bottom: 20px;
+   /* Adjust margin as needed */
+}
+
+.index-metrics {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.metric {
+    text-align: center;
+    background-color: #e6f0fa;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.metric-value {
+    font-size: 20px;
+    font-weight: bold;
+    color: #0056b3;
+}
+
+.metric-label {
+    color: #333;
+    font-size: 14px;
+}
+.tunindex-container {
+    background-color: #f0f2f5; /* Light gray background for subtle contrast */
+    border-left: 5px solid #0056b3; /* Blue accent border on the left */
+    padding: 20px; /* Padding for space inside the container */
+    border-radius: 8px; /* Rounded corners for a modern look */
+    margin: 20px 0; /* Space around the container */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1); /* Soft shadow for depth */
+}
+
+.tunindex-title {
+    font-size: 18px; /* Larger text for the title */
+    color: #0056b3; /* Blue text to match the border */
+    margin-bottom: 10px; /* Space between title and content */
+    font-weight: 500; /* Medium font weight for emphasis */
+}
+
+.tunindex-text {
+    font-size: 16px; /* Standard readable font size */
+    line-height: 1.5; /* Adequate line height for readability */
+    color: #333; /* Dark grey text for better readability */
+    text-align: justify; /* Justified text for a clean look */
+}
+
+
         </style>
     </head>
     <br>
     <body>
-        <div class="container_add">
-          <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-          <h1 style="color:#0056b3">Optimized Portfolio Analysis</h1>
+      <div class="container_add">
+        <h1 style="color:#0056b3; text-align:center;">
+          <i class="fas fa-chart-line"></i> TUNINDEX Analysis
+      </h1>
+                
+          <!-- TUNINDEX Summary -->
+            <div class="tunindex-container">
+              <div class="tunindex-title">About TUNINDEX</div>
+              <p class="tunindex-text">The TUNINDEX is the main Tunisian stock market index that tracks the performance of the largest stocks listed on the Tunis Stock Exchange. This index is a key indicator of the overall health of the Tunisian financial market and provides insights into the economic trends in Tunisia.</p>
+          </div>
+          
+                        <!-- Some key metrics about the index -->
+              <div class="index-metrics">
+                  <div class="metric">
+                      <span class="metric-value">8,380</span>
+                      <span class="metric-label">Current Index Value</span>
+                  </div>
+                  <div class="metric">
+                      <span style="color:#28a745" class="metric-value">+5%</span>
+                      <span class="metric-label">YTD Change</span>
+                  </div>
+                  <div class="metric">
+                      <span class="metric-value">3%</span>
+                      <span class="metric-label">5-Year CAGR</span>
+                  </div>
+              </div>
+  
           <!-- Display Plotly chart -->
           <div id="plotly-chart"></div>
-
+  
           <!-- JavaScript to render Plotly chart -->
+          <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
           <script>
-              // Retrieve Plotly chart JSON from Django view
               var plotlyChartJson = '{{ plotly_chart|safe }}';
-    
-      
-              // Render Plotly chart
-              Plotly.newPlot('plotly-chart', JSON.parse('{{ plotly_chart|safe }}'));
+              Plotly.newPlot('plotly-chart', JSON.parse(plotlyChartJson));
           </script>
-        </div>
-    
-    </body>
+  
+          <!-- Sentiment analysis section -->
+          <div class="sentiment">
+              <h2 style="color:#0056b3">News Sentiment Analysis <i class="far fa-newspaper"></i></h2>
+              <p><i class="far fa-thumbs-up positive"></i> Positive Sentiment: {{ news_sentiment.Positive }}</p>
+              <p><i class="far fa-meh-blank neutral"></i> Neutral Sentiment: {{ news_sentiment.Neutral }}</p>
+              <p><i class="far fa-thumbs-down negative"></i> Negative Sentiment: {{ news_sentiment.Negative }}</p>
+              <div class="forum-actions">
+                  <a href="{% url 'sentiment_analysis' %}" class="analysis-button"><i class="fas fa-chart-line"></i> Detailed Analysis</a>
+              </div>
+          </div>
+      </div>
+  </body>
+  
     </html>
     <br>
     {% include "footer.html" %}
