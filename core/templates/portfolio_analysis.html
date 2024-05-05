@@ -443,8 +443,9 @@
                     <i class="fas fa-car icon"></i>
                     {% else %}
                     <i class="fas fa-building icon"></i>
-                    {% endif %}          
-                        <h3>{{ company }}</h3>
+                    {% endif %}   
+                         
+                        <h3> <a href="{% url 'company_details' company_name=company %}">{{ company }}</a> </h3>
               <p>Allocation: {{ data.weight }}%</p>
               <p class="investment-amount">{{ data.funds_allocation }} TND</p>
               <p class="performance {% if data.change_percentage > 0 %}green{% elif data.change_percentage < 0 %}red{% else %}yellow{% endif %}">

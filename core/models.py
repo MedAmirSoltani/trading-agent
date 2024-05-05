@@ -34,9 +34,9 @@ class Preferences(models.Model):
     ]
     SECTORS_CHOICES = [
         ('all', 'All (highly recommended)'),
-        ('leasing', 'Leasing'),
+        ('assurance', 'Assurance'),
         ('other', 'industrial'),
-        ('assurance', 'Assurance (not recommended)'),
+        ('leasing', 'Leasing (not recommended)'),
         ('bank', 'Bank (not recommended)')
  
     
