@@ -13,6 +13,7 @@ from .forms import CustomUserCreationForm, CustomAuthenticationForm,CustomUserCh
 from django.http import JsonResponse
 import matplotlib.pyplot as plt
 import yfinance as yf
+
 def home(request):
     # Fetch real-time data from Yahoo Finance for a specific stock (e.g., S&P 500)
     stock_data = yf.download('^GSPC', period='1d', interval='1m')
@@ -74,6 +75,11 @@ import plotly.graph_objs as go
 from statsmodels.tsa.arima.model import ARIMA
 
 def dashboard(request):
+    if request.method == 'POST':
+        days_to_forecast = int(request.POST.get('days_to_forecast', 5))
+    else:
+        days_to_forecast = 5  # Default value if no input is provided
+
     # Load CSV data
     df = pd.read_csv('C:/Users/solta/OneDrive/Bureau/project/trading-agent/data/TUNINDEX_pi_ds_esprit.csv')
 
@@ -85,7 +91,7 @@ def dashboard(request):
     model_fit = model.fit()
 
     # Forecast future prices
-    forecast = model_fit.forecast(steps=10)
+    forecast = model_fit.forecast(steps=days_to_forecast)
 
     # Create Plotly trace for the candlestick chart
     trace_candlestick = go.Candlestick(
@@ -100,7 +106,7 @@ def dashboard(request):
     )
 
     # Add forecasted prices to the trace
-    forecast_dates = pd.date_range(start=df['Date'].iloc[-1], periods=5)[1:]
+    forecast_dates = pd.date_range(start=df['Date'].iloc[-1], periods=days_to_forecast+1)[1:]
     trace_forecast = go.Scatter(
         x=forecast_dates,
         y=forecast,
@@ -131,8 +137,7 @@ def dashboard(request):
     # Convert Plotly figure to JSON
     plotly_chart = fig.to_json()
 
-    return render(request, 'dashboard.html', {'plotly_chart': plotly_chart})
-
+    return render(request, 'dashboard.html', {'plotly_chart': plotly_chart,'days_to_forecast':days_to_forecast})
 
 
 
@@ -160,9 +165,12 @@ def market_insights(request):
     # Fit an ARIMA model
     model = ARIMA(df['Price'], order=(5, 1, 0))
     model_fit = model.fit()
-
+    if request.method == 'POST':
+        days_to_forecast = int(request.POST.get('days_to_forecast', 5))
+    else:
+        days_to_forecast = 5  # Default value if no input is provided
     # Forecast future prices
-    forecast = model_fit.forecast(steps=10)
+    forecast = model_fit.forecast(days_to_forecast)
 
     # Create Plotly trace for the line chart
     trace = go.Scatter(x=df['Date'],
@@ -215,7 +223,7 @@ def market_insights(request):
     # Sentiment analysis data (dummy data for now)
     news_sentiment = {'Positive': 0.6, 'Neutral': 0.3, 'Negative': 0.1}
 
-    return render(request, 'market_insights.html', {'plotly_chart': plotly_chart, 'news_sentiment': news_sentiment, 'table_data': table_data_list})
+    return render(request, 'market_insights.html', {'plotly_chart': plotly_chart, 'news_sentiment': news_sentiment, 'table_data': table_data_list,'days_to_forecast':days_to_forecast})
 
 
 
@@ -240,9 +248,13 @@ def company_details(request, company_name):
     # Fit an ARIMA model
     model = ARIMA(df_company['Price'], order=(5, 1, 0))
     model_fit = model.fit()
+    if request.method == 'POST':
+        days_to_forecast = int(request.POST.get('days_to_forecast', 5))
+    else:
+        days_to_forecast = 5  # Default value if no input is provided
 
     # Forecast future prices
-    forecast = model_fit.forecast(steps=10)
+    forecast = model_fit.forecast(days_to_forecast)
 
     # Additional information about the company
     company_info = {
@@ -291,7 +303,7 @@ def company_details(request, company_name):
     plotly_chart = fig.to_json()
 
     # Pass data to the template for rendering
-    return render(request, 'company_details.html', {'plotly_chart': plotly_chart, 'company_info': company_info})
+    return render(request, 'company_details.html', {'plotly_chart': plotly_chart, 'company_info': company_info,'days_to_forecast':days_to_forecast})
 
 
 
@@ -371,16 +383,6 @@ def sector_details(request, sector_name):
 
 
 
-
-
-
-def portfolio_analysis(request):    
-    # Dummy data for demonstration
-    portfolio_metrics = {'Cumulative Returns': 0.25, 'Volatility': 0.15, 'Sharpe Ratio': 1.5, 'Max Drawdown': 0.1}
-    benchmark_performance = {'Cumulative Returns': 0.20, 'Volatility': 0.12, 'Sharpe Ratio': 1.3, 'Max Drawdown': 0.12}
-
-    return render(request, 'portfolio_analysis.html', {'portfolio_metrics': portfolio_metrics,
-                                                        'benchmark_performance': benchmark_performance})
 
 
 
@@ -601,7 +603,7 @@ def preferences(request):
             request.user.preferences = preferences
             request.user.save()
             
-            return redirect('dashboard')  # Redirect to dashboard or any other page
+            return redirect('portfolio_analysis')  # Redirect to dashboard or any other page
     else:
         form = PreferencesForm()
     return render(request, 'preferences.html', {'form': form})
@@ -616,7 +618,7 @@ def update_preferences(request):
         form = PreferencesForm(request.POST, instance=preferences)
         if form.is_valid():
             form.save()
-            return redirect('dashboard')  # Redirect to dashboard or any other page
+            return redirect('portfolio_analysis')  # Redirect to dashboard or any other page
     else:
         form = PreferencesForm(instance=preferences)
 
@@ -778,3 +780,224 @@ def loading(request):
 
 
 
+
+#model
+import pandas as pd
+from django.shortcuts import render
+from scipy.optimize import minimize
+import numpy as np
+from decimal import Decimal
+def portfolio_analysis(request):
+    preferences = request.user.preferences
+    try:
+        preferences = Preferences.objects.get(user=request.user)
+    except Preferences.DoesNotExist:
+        return redirect('preferences')  
+    # Load your CSV data
+    pref_sector = preferences.sectors
+
+    if pref_sector == 'all':
+        df = pd.read_csv("C:/Users/solta/OneDrive/Bureau/project/trading-agent/data/all_filtered_data21.csv")
+    elif pref_sector == 'assurance':
+        df = pd.read_csv("C:/Users/solta/OneDrive/Bureau/project/trading-agent/data/ass_filtered_data.csv")   
+    elif pref_sector == 'leasing':
+        df = pd.read_csv("C:/Users/solta/OneDrive/Bureau/project/trading-agent/data/leasing_filtered_data.csv")
+    elif pref_sector == 'other':
+        df = pd.read_csv("C:/Users/solta/OneDrive/Bureau/project/trading-agent/data/other_filtered_data.csv") 
+    elif pref_sector == 'bank':
+        df = pd.read_csv("C:/Users/solta/OneDrive/Bureau/project/trading-agent/data/bank_filtered_data.csv")      
+        
+        
+        
+    df['Date'] = pd.to_datetime(df['Date'])
+    
+    # Extract asset returns into df_returns
+    df_prices = df.pivot(index='Date', columns='value', values='Price')
+    df_returns = df_prices.pct_change()
+    
+    # Define risk-free rate
+    rf = 0.08
+    initial_guess = np.ones(len(df_returns.columns)) / len(df_returns.columns)
+    
+    # Define constraints and bounds
+    constraints = ({'type': 'eq', 'fun': lambda x: np.sum(x) - 1},  # Sum of weights equals 1
+                   {'type': 'ineq', 'fun': lambda x: x},  # All weights are non-negative
+                   {'type': 'ineq', 'fun': lambda x: x - 0.05},  # Minimum weight constraint
+                   {'type': 'ineq', 'fun': lambda x: 0.25 - x})  # Maximum weight constraint
+    bounds = [(0, 1)] * len(df_returns.columns)
+    # Get user's risk tolerance preference
+    risk_tolerance = preferences.risk_tolerance
+    
+    # Determine optimization objective based on risk tolerance
+    if risk_tolerance == 'high':
+        # Perform optimization for maximizing return
+        result = minimize(objective_return, initial_guess, args=(preferences,), method='SLSQP', bounds=bounds, constraints=constraints)
+        optimal_weights = result.x
+        optimal_return = -result.fun
+        optimal_volatility = objective_volatility(optimal_weights,preferences)
+        optimal_sharpe_ratio = 0.3
+    elif risk_tolerance == 'medium':
+        # Perform optimization for maximizing Sharpe ratio
+        result = minimize(objective_sharpe_ratio, initial_guess, args=(preferences,), method='SLSQP', bounds=bounds, constraints=constraints)
+        optimal_weights = result.x
+        optimal_return = -objective_return(optimal_weights,preferences)
+        optimal_volatility = objective_volatility(optimal_weights,preferences)
+        optimal_sharpe_ratio = -(result.fun)
+    elif risk_tolerance == 'low':
+        # Perform optimization for minimizing volatility
+        result = minimize(objective_volatility, initial_guess,args=(preferences,), method='SLSQP', bounds=bounds, constraints=constraints)
+        optimal_weights = result.x
+        optimal_return = -objective_return(optimal_weights,preferences)
+        optimal_volatility = result.fun
+        optimal_sharpe_ratio = -(optimal_return - rf) / optimal_volatility
+    else:
+        # Default to maximizing return
+        result = minimize(objective_return, initial_guess, method='SLSQP', bounds=bounds, constraints=constraints)
+        optimal_weights = result.x
+
+
+    # Get company names and sectors
+    company_names = df_returns.columns.tolist()
+    company_sectors = df['Sector'].unique().tolist()    
+    # Create dictionary to hold company names, sectors, and weights
+    funds_allocation = {company: round((preferences.available_funds * Decimal(weight)), 2) 
+                    for company, weight in zip(company_names, optimal_weights)}
+
+# Create dictionary to hold company names, sectors, weights, and funds allocation
+    weights = {company: {'Sector': df.loc[df['value'] == company, 'Sector'].iloc[0],
+                     'weight': round(weight * 100),
+                     'funds_allocation': allocation,
+                     'change_percentage': df[df['value'] == company].sort_values(by='Date', ascending=False)['Change %'].iloc[0]}
+           for company, weight, allocation in zip(company_names, optimal_weights, funds_allocation.values())}
+
+# Pass the computed metrics and company weights to the template for rendering
+    return render(request, 'portfolio_analysis.html', {'weights': weights,
+                                                    'optimal_return': round(optimal_return*100),
+                                                    'optimal_volatility': round(optimal_volatility*100),
+                                                    'optimal_sharpe_ratio': round(optimal_sharpe_ratio, 2),
+                                                    'Sector': company_sectors})
+
+# Define objective functions
+def objective_return(weights, preferences):
+    pref_sector = preferences.sectors
+    if pref_sector == 'all':
+        df = pd.read_csv("C:/Users/solta/OneDrive/Bureau/project/trading-agent/data/all_filtered_data21.csv")
+    elif pref_sector == 'assurance':
+        df = pd.read_csv("C:/Users/solta/OneDrive/Bureau/project/trading-agent/data/ass_filtered_data.csv") 
+    elif pref_sector == 'leasing':
+        df = pd.read_csv("C:/Users/solta/OneDrive/Bureau/project/trading-agent/data/leasing_filtered_data.csv") 
+    elif pref_sector == 'other':
+        df = pd.read_csv("C:/Users/solta/OneDrive/Bureau/project/trading-agent/data/other_filtered_data.csv") 
+    elif pref_sector == 'bank':
+        df = pd.read_csv("C:/Users/solta/OneDrive/Bureau/project/trading-agent/data/bank_filtered_data.csv")   
+        
+    df['Date'] = pd.to_datetime(df['Date'])
+
+
+
+    if pref_sector == 'all':
+        sentiment_scores = [0.15, -0.025, 0.05, -0.05, 0.1, 0.0, 0.2, -0.08, 0.1]
+    elif pref_sector == 'assurance':
+        sentiment_scores = [0.0] * 5
+    elif pref_sector == 'leasing':
+        sentiment_scores = [0.0] * 3
+    elif pref_sector == 'other':
+        sentiment_scores = [0.0] * 6
+    elif pref_sector == 'bank':
+        sentiment_scores = [0.0] * 4
+
+
+
+    # Extract asset returns into df_returns
+    df_prices = df.pivot(index='Date', columns='value', values='Price')
+    df_returns = df_prices.pct_change()
+    mean_returns = df_returns.mean(axis=0)
+
+    portfolio_return = np.dot(weights, mean_returns) * 252
+    weighted_sentiment = np.dot(weights, sentiment_scores)
+    return -(portfolio_return + weighted_sentiment)
+
+def objective_sharpe_ratio(weights,preferences):
+    pref_sector = preferences.sectors
+    if pref_sector == 'all':
+        df = pd.read_csv("C:/Users/solta/OneDrive/Bureau/project/trading-agent/data/all_filtered_data21.csv")
+    elif pref_sector == 'assurance':
+        df = pd.read_csv("C:/Users/solta/OneDrive/Bureau/project/trading-agent/data/ass_filtered_data.csv")
+    elif pref_sector == 'leasing':
+        df = pd.read_csv("C:/Users/solta/OneDrive/Bureau/project/trading-agent/data/leasing_filtered_data.csv") 
+    elif pref_sector == 'other':
+        df = pd.read_csv("C:/Users/solta/OneDrive/Bureau/project/trading-agent/data/other_filtered_data.csv") 
+    elif pref_sector == 'bank':
+        df = pd.read_csv("C:/Users/solta/OneDrive/Bureau/project/trading-agent/data/bank_filtered_data.csv")    
+
+
+
+    df['Date'] = pd.to_datetime(df['Date'])
+
+
+    if pref_sector == 'all':
+        sentiment_scores = [0.15, -0.025, 0.05, -0.05, 0.1, 0.0, 0.2, -0.08, 0.1]
+    elif pref_sector == 'assurance':
+        sentiment_scores = [0.0] * 5
+    elif pref_sector == 'leasing':
+        sentiment_scores = [0.0] * 3
+    elif pref_sector == 'other':
+        sentiment_scores = [0.0] * 6
+    elif pref_sector == 'bank':
+        sentiment_scores = [0.0] * 4
+
+
+
+
+    # Extract asset returns into df_returns
+    df_prices = df.pivot(index='Date', columns='value', values='Price')
+    df_returns = df_prices.pct_change()
+    mean_returns = df_returns.mean(axis=0)
+
+    cov_matrix = df_returns.cov() * 252
+    rf = 0.08
+    portfolio_return = np.dot(weights, mean_returns) * 252
+    portfolio_volatility = np.sqrt(np.dot(weights.T, np.dot(cov_matrix, weights)))
+    sharpe_ratio = (portfolio_return - rf) / portfolio_volatility
+    weighted_sentiment = np.dot(weights, sentiment_scores)
+    return -(sharpe_ratio + weighted_sentiment)
+
+def objective_volatility(weights,preferences):
+    pref_sector = preferences.sectors
+
+    if pref_sector == 'all':
+        df = pd.read_csv("C:/Users/solta/OneDrive/Bureau/project/trading-agent/data/all_filtered_data21.csv")
+    elif pref_sector == 'assurance':
+        df = pd.read_csv("C:/Users/solta/OneDrive/Bureau/project/trading-agent/data/ass_filtered_data.csv")  
+    elif pref_sector == 'leasing':
+        df = pd.read_csv("C:/Users/solta/OneDrive/Bureau/project/trading-agent/data/leasing_filtered_data.csv")  
+    elif pref_sector == 'other':
+        df = pd.read_csv("C:/Users/solta/OneDrive/Bureau/project/trading-agent/data/other_filtered_data.csv") 
+    elif pref_sector == 'bank':
+        df = pd.read_csv("C:/Users/solta/OneDrive/Bureau/project/trading-agent/data/bank_filtered_data.csv")   
+        
+    df['Date'] = pd.to_datetime(df['Date'])
+
+
+
+
+
+    if pref_sector == 'all':
+        sentiment_scores = [0.15, -0.025, 0.05, -0.05, 0.1, 0.0, 0.2, -0.08, 0.1]
+    elif pref_sector == 'assurance':
+        sentiment_scores = [0.0] * 5
+    elif pref_sector == 'leasing':
+        sentiment_scores = [0.0] * 3
+    elif pref_sector == 'other':
+        sentiment_scores = [0.0] * 6
+    elif pref_sector == 'bank':
+        sentiment_scores = [0.0] * 4
+
+
+
+    df_prices = df.pivot(index='Date', columns='value', values='Price')
+    df_returns = df_prices.pct_change()
+    cov_matrix = df_returns.cov() * 252
+    portfolio_volatility = np.sqrt(np.dot(weights.T, np.dot(cov_matrix, weights)))
+    weighted_sentiment = np.dot(weights, sentiment_scores)
+    return portfolio_volatility + weighted_sentiment

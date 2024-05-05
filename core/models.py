@@ -20,11 +20,6 @@ class Preferences(models.Model):
         ('long_term', 'Long Term')
     ]
 
-    LIQUIDITY_NEEDS_CHOICES = [
-        ('low', 'Low'),
-        ('medium', 'Medium'),
-        ('high', 'High')
-    ]
 
     INVESTMENT_OBJECTIVE_CHOICES = [
         ('capital_preservation', 'Capital Preservation'),
@@ -38,15 +33,17 @@ class Preferences(models.Model):
         ('advanced', 'Advanced')
     ]
     SECTORS_CHOICES = [
-        ('banks', 'Banks'),
+        ('all', 'All (highly recommended)'),
         ('leasing', 'Leasing'),
-        ('others', 'Others'),
-        ('all', 'All')
+        ('other', 'industrial'),
+        ('assurance', 'Assurance (not recommended)'),
+        ('bank', 'Bank (not recommended)')
+ 
+    
     ]
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_preferences')
     risk_tolerance = models.CharField(max_length=10, choices=RISK_TOLERANCE_CHOICES)
     investment_horizon = models.CharField(max_length=20, choices=INVESTMENT_HORIZON_CHOICES)
-    liquidity_needs = models.CharField(max_length=10, choices=LIQUIDITY_NEEDS_CHOICES)
     investment_objective = models.CharField(max_length=20, choices=INVESTMENT_OBJECTIVE_CHOICES)
     knowledge_experience = models.CharField(max_length=20, choices=KNOWLEDGE_EXPERIENCE_CHOICES)
     sectors = models.CharField(max_length=20, choices=SECTORS_CHOICES)

@@ -315,90 +315,99 @@ h2 i {
     </div>
     </body>
     <br> 
-<script>
-        window.onload = function() {
-        const chatMessages = document.getElementById('chat-messages');
-        const welcomeMessage = document.createElement('p');
-        welcomeMessage.classList.add('bot-message');
-        welcomeMessage.innerHTML = `<span class="bot-name">ArtSmart:</span> Ahoy, adventurer! Welcome aboard the trading vessel. How can I assist you in navigating the vast financial oceans today? 🌊📈`;
-        chatMessages.appendChild(welcomeMessage);
-    };
-    const userMessage = document.getElementById('user-message');
-    const sendButton = document.getElementById('send-button');
-    const chatMessages = document.getElementById('chat-messages');
-
-// Expanded and creatively enhanced responses for the chatbot
-
-const responses = {
-    "hello": "Ahoy, Trader! Captain ArtSmart at your service. Ready to conquer the financial seas? 🏴‍☠️ Let's chart a course to treasure!",
-    "thanks": "You're welcome! If gratitude were currency, you just made me a billionaire! 💰 What's next on our adventure?",
-    // Added creative responses for an engaging experience
-    "portfolio optimization": "Imagine your portfolio as a garden. We're here to pick the best plants (investments) that not only look spectacular together but also thrive well. 🌻📈 Let's cultivate your financial Eden!",
-    "how to navigate": "Navigating here is easier than finding a big dipper in a clear night sky! 🌌 Use the top compass (navigation bar) to sail through the ocean of knowledge. Seek treasures in the 'Learn' cove.",
-    "trading questions": "Curious about the mystical arts of trading? From the swift day trading spells to the powerful long-term investment incantations, I'm your wizardly guide. 🧙‍♂️✨",
-    "risk management": "Think of managing risk like packing an umbrella. ☂️ Sometimes it rains (market drops), and we gotta stay dry (protect our investments). Let's build your financial weather forecast!",
-    "financial instruments": "In the orchestra of the financial market, every instrument plays a crucial role. From the stocks' trumpets to the bonds' violins, let's compose your symphony of wealth. 🎻🎺",
-    "technical issues": "Facing gremlins in the machine? 🛠️ Fear not! Try the magic reset spell (refresh) or the ancient cache-clearing ritual. If the gremlins persist, summon our support wizards!",
-    "investment strategies": "Imagine being a culinary genius. Investment strategies are your recipes, and financial instruments are your ingredients. Let's cook up some profitable dishes! 🍳💼",
-    "about the website": "This website is like a treasure map, guiding you to the X marks of knowledge and wealth. Here, find tools to navigate the markets and insights brighter than a lighthouse. 🗺️💡",
-    "what is trading": "Trading is like the marketplace of old, bustling and full of opportunities. Here, we exchange modern treasures (stocks, bonds, gold) hoping our chest of wealth grows. 📊💎",
-    "default": "Hmm, seems I've encountered a foggy sea. Could you light a beacon (rephrase) so we navigate clearer waters? Or dive into our FAQ ocean for pearls of wisdom. 🌊🔍"
-};
-// Adding more creative responses
-responses["market trends"] = "Riding the waves of market trends is like surfing. 🏄 Sometimes you catch a great wave, other times you might wipe out. But fear not, I'm here to help you find the best waves!";
-responses["stock advice"] = "Seeking stock advice? Let's consult the financial crystal ball together. Remember, all investments carry risk, but fortune favors the bold! 📈🔮";
-responses["learning resources"] = "Hungry for knowledge? Our 'Learn' section is like a buffet for your brain, full of tasty morsels of financial wisdom. Bon appétit! 🍽️📚";
-
-function getResponse(message) {
-    message = message.toLowerCase();
-
-    if (message.includes("hello") || message.includes("hi") || message.includes("wa") || message.includes("hey")) {
-        return responses["hello"];
-    } else if (message.includes("thanks") || message.includes("thank you") || message.includes("appreciate")) {
-        return responses["thanks"];
-    } else if (message.includes("optimize") || message.includes("best portfolio") || message.includes("portfolio selection")) {
-        return responses["portfolio optimization"];
-    } else if (message.includes("how navigate") || message.includes("where find")) {
-        return responses["how to navigate"];
-    } else if (message.includes("trading question") || message.includes("how trade") || message.includes("begin trading")) {
-        return responses["trading questions"];
-    } else if (message.includes("manage risk") || message.includes("risk management") || message.includes("avoid loss")) {
-        return responses["risk management"];
-    } else if (message.includes("financial instrument") || message.includes("stocks") || message.includes("bonds") || message.includes("currencies")) {
-        return responses["financial instruments"];
-    } else if (message.includes("technical issue") || message.includes("site not working") || message.includes("can't access")) {
-        return responses["technical issues"];
-    } else if (message.includes("strategy") || message.includes("investment approach") || message.includes("how invest")) {
-        return responses["investment strategies"];
-    } else if (message.includes("about the website") || message.includes("your services") || message.includes("what offer")) {
-        return responses["about the website"];
-    } else if (message.includes("what is trading") || message.includes("explain trading") || message.includes("trading basics")) {
-        return responses["what is trading"];
-    } else if (message.includes("market trend") || message.includes("current market") || message.includes("market forecast")) {
-        return responses["market trends"];
-    } else if (message.includes("stock advice") || message.includes("which stock") || message.includes("stock recommendation")) {
-        return responses["stock advice"];
-    } else if (message.includes("learn") || message.includes("education") || message.includes("how start learning")) {
-        return responses["learning resources"];
-    } else {
-        return responses["default"];
-    }
-}
-
-
-    sendButton.addEventListener('click', () => {
-        const message = userMessage.value.trim();
-        const reply = getResponse(message);
-        const botName = "ArtSmart";
-        const html = '<p class="user-message">' + message + '</p>' + 
-                     '<p class="bot-message"><span class="bot-name">' + botName + ':</span> <span class="bot-text">' + reply + '</span></p>';
-
-        chatMessages.innerHTML += html;
-        userMessage.value = '';
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    });
-</script>
-
+    <script>
+      window.onload = function() {
+          const chatMessages = document.getElementById('chat-messages');
+          const welcomeMessage = document.createElement('p');
+          welcomeMessage.classList.add('bot-message');
+          welcomeMessage.innerHTML = `<span class="bot-name">ArtSmart:</span> Ahoy, adventurer! Welcome aboard the trading vessel. How can I assist you in navigating the vast financial oceans today? 🌊📈`;
+          chatMessages.appendChild(welcomeMessage);
+      };
+  
+      const userMessage = document.getElementById('user-message');
+      const sendButton = document.getElementById('send-button');
+      const chatMessages = document.getElementById('chat-messages');
+  
+      // Expanded and creatively enhanced responses for the chatbot
+      const responses = {
+          "hello": "Hello! 🙋‍♂️ How can I assist you today? Are you looking for information on trading, investment strategies, or something else?",
+          "thanks": "You're welcome! 😊 How can I further assist you? Do you have any other questions about our services or need advice?",
+          // Added creative responses for an engaging experience
+          "optimization": "To optimize your portfolio, consider diversifying your investments and periodically rebalancing. 📊 Do you want to discuss specific assets or investment types?",
+          "how to navigate": "You can navigate our site using the top menu or the search bar at the corner. 🔍 What exactly are you looking for? Perhaps something on our latest articles or our service offerings?",
+          "trading questions": "Trading involves buying and selling securities. 📈 What specific trading questions do you have? Are you interested in stock trading, forex, or commodities?",
+          "risk management": "Risk management is crucial to protecting your investments. 🛡️ Risk management is the continuing process to identify, analyze, evaluate, and treat loss exposures and monitor risk control and financial resources to mitigate the adverse effects of loss.",
+          "financial instruments": "Financial instruments include stocks, bonds, and currencies. 💹 Do you have questions about any specific type of instrument or how they are used in trading?",
+          "technical issues": "I'm here to help with any technical issues. 🔧 Could you please describe the problem you're experiencing? Is it a login issue, a display error, or something else?",
+          "investment strategies": "Investment strategies can vary widely depending on your goals and risk tolerance. 💰 Are you interested in short-term gains or long-term investments? Or maybe you need advice on asset allocation?",
+          "about the website": "Our website offers a range of services from market analysis to investment tools. 🌐 What information are you particularly interested in? Maybe you'd like to know more about our premium services?",
+          "what is trading": "Trading is the act of buying, selling, or exchanging assets. 💸 Are you looking for beginner tips or advanced trading strategies? What markets are you interested in?",
+          "market trends": "Understanding market trends can help you make informed decisions. 📉📈 Are you looking for current market trends or historical data analysis? What specific market or region are you focused on?",
+          "stock advice": "Looking for stock advice? I can provide guidance based on current market conditions. 📊 However, remember to consult with a financial advisor for personalized advice. What type of stocks are you interested in? Large-cap, mid-cap, small-cap?",
+          "learning resources": "Our learning resources range from beginner guides to advanced tutorials. 🎓 Check our Courses Section!! What area of finance are you looking to learn more about? Investments, trading, or risk management?",
+          // Custom responses based on the provided Intent and Patterns
+          "tunisian stock market inquiry": "Investing in the Tunisian stock market offers unique opportunities and challenges. 🇹🇳 Are you interested in learning about the major companies listed on the BVMT, or do you need specific investment advice for trading Tunisian stocks?",
+          "major companies": "Major companies listed on the BVMT include Tunisie Telecom, Banque de Tunisie, and Poulina Group Holding, among others. 🏢 Do you want detailed information on any specific sector, such as telecommunications, banking, or industrials?",
+          "banking sector": "The banking sector in Tunisia includes key players like Banque de Tunisie and BIAT. They offer a variety of financial services and have shown resilience in economic fluctuations. 💰 Are you looking into investing in this sector or seeking general information?",
+          "investment tips banking": "When considering investing in Tunisian banks, it's important to analyze their financial health, dividend history, and market positioning. 📊 Would you like to discuss risk management strategies for these investments?",
+          "risk management banking": "Risk management in the banking sector can involve diversifying your holdings, setting stop-loss orders, and staying updated with financial reports and regulatory changes. 🛡️ Would you like more insights into portfolio optimization?"
+      };
+  
+      // Intents and Patterns
+      const intents = {
+          "hello": ["hello", "hi", "good morning", "good afternoon"],
+          "thanks": ["thanks", "thank you", "much appreciated", "thanks a lot"],
+          "optimization": ["optimize portfolio", "optimize", "portfolio optimization", "how to optimize my portfolio", "best way to manage portfolio"],
+          "how to navigate": ["how to navigate", "site navigation", "navigate the website", "website guide"],
+          "trading questions": ["trading question", "how to trade", "beginner trading tips", "start trading"],
+          "risk management": ["manage risk", "risk management", "how to manage risk", "risk mitigation strategies"],
+          "financial instruments": ["financial instruments", "about financial instruments", "types of financial instruments", "what are financial instruments"],
+          "technical issues": ["technical issue", "website not working", "can't access site", "site down"],
+          "investment strategies": ["investment strategy", "how to invest", "investment planning", "creating an investment strategy"],
+          "about the website": ["about the website", "website information", "what services do you offer", "site services"],
+          "what is trading": ["what is trading", "trading basics", "explain trading", "understanding trading"],
+          "market trends": ["market trends", "market analysis", "understand market trends", "analyze market"],
+          "stock advice": ["stock advice", "stock tips", "which stock to buy", "stock picking tips"],
+          "learning resources": ["learning resources", "where to learn", "courses on finance", "finance education"],
+          // Custom patterns based on the provided Intent and Patterns
+          "tunisian stock market inquiry": ["tunisian stock market", "BVMT", "Tunisian stocks", "investing in Tunisia"],
+          "major companies": ["major companies listed", "who are the major players", "key companies BVMT", "companies"],
+          "banking sector": ["banking sector", "about banking sector", "Tunisian banks", "banking"],
+          "investment tips banking": ["investment tips for banks", "how to invest in banks", "banking investment tips", "tips"],
+          "risk management banking": ["risk management in banking", "how to manage risk in banking", "bank sector risk management"]
+      };
+  
+      function getIntent(message) {
+          message = message.toLowerCase();
+          for (const intent in intents) {
+              if (intents[intent].some(pattern => message.includes(pattern))) {
+                  return intent;
+              }
+          }
+          return "default";
+      }
+  
+      function getResponse(intent) {
+          if (responses.hasOwnProperty(intent)) {
+              return responses[intent];
+          } else {
+            return "It seems like we're exploring new territory here! Let me do my best to assist you. 😊";
+                                        }
+      }
+  
+      sendButton.addEventListener('click', () => {
+          const message = userMessage.value.trim();
+          const intent = getIntent(message);
+          const reply = getResponse(intent);
+          const botName = "ArtSmart";
+          const html = '<p class="user-message">' + message + '</p>' +
+              '<p class="bot-message"><span class="bot-name">' + botName + ':</span> <span class="bot-text">' + reply + '</span></p>';
+          chatMessages.innerHTML += html;
+          userMessage.value = '';
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+      });
+  </script>
+  
 
 
 

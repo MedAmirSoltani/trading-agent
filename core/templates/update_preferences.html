@@ -254,6 +254,14 @@
                   {% endfor %}
               </select>
           </div>
+          <div class="form-group">
+            <label for="knowledge_experience"><i class="fas fa-industry"></i> Sectors to Invest In:</label>
+            <select name="sectors" id="sectors">
+                {% for value, label in form.fields.sectors.choices %}
+                    <option value="{{ value }}" {% if form.instance.sectors == value %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
                 <div class="form-group">
                     <label for="investment_horizon"><i class="fas fa-hourglass-half"></i> Investment Horizon:</label>
                     <select name="investment_horizon" id="investment_horizon">
@@ -262,14 +270,7 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="liquidity_needs"><i class="fas fa-money-bill-wave"></i> Liquidity Needs:</label>
-                    <select name="liquidity_needs" id="liquidity_needs">
-                        {% for value, label in form.fields.liquidity_needs.choices %}
-                            <option value="{{ value }}" {% if form.instance.liquidity_needs == value %}selected{% endif %}>{{ label }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
+               
                 <div class="form-group">
                     <label for="investment_objective"><i class="fas fa-bullseye"></i> Investment Objective:</label>
                     <select name="investment_objective" id="investment_objective">
@@ -289,17 +290,10 @@
 
 
 
-                <div class="form-group">
-                    <label for="knowledge_experience"><i class="fas fa-industry"></i> Sectors to Invest In:</label>
-                    <select name="sectors" id="sectors">
-                        {% for value, label in form.fields.sectors.choices %}
-                            <option value="{{ value }}" {% if form.instance.sectors == value %}selected{% endif %}>{{ label }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
+         
 
                 <div class="form-group">
-                    <label for="available_funds"><i class="fas fa-money-bill"></i> Available Funds ($):</label>
+                    <label for="available_funds"><i class="fas fa-money-bill"></i> Available Funds (TND):</label>
                     <input type="number" name="available_funds" id="available_funds" step="0.01" value="{{ form.instance.available_funds }}">
                 </div>
                 <div class="our">
